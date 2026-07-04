@@ -1,0 +1,18 @@
+{
+  "pr_number": 3371,
+  "model_key": "gemini-3.5-flash",
+  "model_name": "openrouter/google/gemini-3.5-flash",
+  "exit_status": "TimedOut",
+  "elapsed_seconds": 665.6,
+  "submission_chars": 0,
+  "resolved": false,
+  "fail_to_pass_total": 1,
+  "fail_to_pass_passed": 0,
+  "pass_to_pass_total": 0,
+  "pass_to_pass_passed": 0,
+  "detail": {
+    "resolved": false,
+    "FAIL_TO_PASS": {},
+    "PASS_TO_PASS": {}
+  }
+}

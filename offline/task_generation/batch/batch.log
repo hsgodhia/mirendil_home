@@ -169,3 +169,51 @@
 [2026-07-03 21:31:26] pr-3460/kimi-k2.7-code: submitted 1692 chars in 437s, grading...
 [2026-07-03 21:31:29] pr-3460/kimi-k2.7-code: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 5/5
 [2026-07-03 21:31:29] pr-3460/gpt-oss-120b: running mini-swe-agent (openrouter/openai/gpt-oss-120b), timeout=1279s (4x completed-peer average)
+[2026-07-03 21:41:52] pr-3460/gpt-oss-120b: submitted 2008 chars in 623s, grading...
+[2026-07-03 21:41:58] pr-3460/gpt-oss-120b: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 5/5
+[2026-07-03 21:41:58] pr-3451: generating task config
+[2026-07-03 21:41:59] pr-3451: verifying FAIL_TO_PASS/PASS_TO_PASS in Docker
+[2026-07-03 21:42:06] pr-3451: SKIPPING all models -- no verified FAIL_TO_PASS tests for this task (status=no_discriminating_tests)
+[2026-07-03 21:42:06] pr-3411: generating task config
+[2026-07-03 21:42:08] pr-3411: verifying FAIL_TO_PASS/PASS_TO_PASS in Docker
+[2026-07-03 21:42:20] pr-3411: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=1, PASS_TO_PASS=3
+[2026-07-03 21:42:20] pr-3411: building agent-safe image (nltk-agent-safe:pr-3411) at commit 25fe6242aa
+[2026-07-03 21:42:28] pr-3411/laguna: running mini-swe-agent (openrouter/poolside/laguna-xs-2.1), timeout=716s (4x completed-peer average)
+[2026-07-03 21:44:14] pr-3411/laguna: submitted 2569 chars in 106s, grading...
+[2026-07-03 21:44:20] pr-3411/laguna: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 0/3
+[2026-07-03 21:44:20] pr-3411/gemini-3.5-flash: running mini-swe-agent (openrouter/google/gemini-3.5-flash), timeout=426s (4x completed-peer average)
+[2026-07-03 21:45:35] pr-3411/gemini-3.5-flash: submitted 2732 chars in 75s, grading...
+[2026-07-03 21:45:41] pr-3411/gemini-3.5-flash: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 0/3
+[2026-07-03 21:45:41] pr-3411/kimi-k2.7-code: running mini-swe-agent (openrouter/moonshotai/kimi-k2.7-code), timeout=363s (4x completed-peer average)
+[2026-07-03 21:51:44] pr-3411/kimi-k2.7-code: TIMED OUT after 363s (4x peer average) -- killed its container, marking failed, moving on
+[2026-07-03 21:51:44] pr-3411/kimi-k2.7-code: no submission (exit_status=TimedOut), skipping grading
+[2026-07-03 21:51:44] pr-3411/kimi-k2.7-code: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 0/3
+[2026-07-03 21:51:44] pr-3411/gpt-oss-120b: running mini-swe-agent (openrouter/openai/gpt-oss-120b), timeout=363s (4x completed-peer average)
+[2026-07-03 21:57:46] pr-3411/gpt-oss-120b: TIMED OUT after 363s (4x peer average) -- killed its container, marking failed, moving on
+[2026-07-03 21:57:46] pr-3411/gpt-oss-120b: no submission (exit_status=TimedOut), skipping grading
+[2026-07-03 21:57:46] pr-3411/gpt-oss-120b: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 0/3
+[2026-07-03 21:57:46] pr-3371: generating task config
+[2026-07-03 21:57:48] pr-3371: verifying FAIL_TO_PASS/PASS_TO_PASS in Docker
+[2026-07-03 21:57:54] pr-3371: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=1, PASS_TO_PASS=0
+[2026-07-03 21:57:54] pr-3371: building agent-safe image (nltk-agent-safe:pr-3371) at commit 30ee1ad5e2
+[2026-07-03 21:57:59] pr-3371/laguna: running mini-swe-agent (openrouter/poolside/laguna-xs-2.1), timeout=621s (4x completed-peer average)
+[2026-07-03 22:08:24] pr-3371/laguna: TIMED OUT after 621s (4x peer average) -- killed its container, marking failed, moving on
+[2026-07-03 22:08:24] pr-3371/laguna: no submission (exit_status=TimedOut), skipping grading
+[2026-07-03 22:08:24] pr-3371/laguna: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 0/0
+[2026-07-03 22:08:28] pr-3371/gemini-3.5-flash: running mini-swe-agent (openrouter/google/gemini-3.5-flash), timeout=663s (4x completed-peer average)
+[2026-07-03 22:19:34] pr-3371/gemini-3.5-flash: TIMED OUT after 663s (4x peer average) -- killed its container, marking failed, moving on
+[2026-07-03 22:19:34] pr-3371/gemini-3.5-flash: no submission (exit_status=TimedOut), skipping grading
+[2026-07-03 22:19:34] pr-3371/gemini-3.5-flash: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 0/0
+[2026-07-03 22:19:38] pr-3371/kimi-k2.7-code: running mini-swe-agent (openrouter/moonshotai/kimi-k2.7-code), timeout=696s (4x completed-peer average)
+[2026-07-03 22:24:50] pr-3371/kimi-k2.7-code: submitted 3123 chars in 312s, grading...
+[2026-07-03 22:25:33] pr-3371/kimi-k2.7-code: DONE -- resolved=True FAIL_TO_PASS 1/1 PASS_TO_PASS 0/0
+[2026-07-03 22:25:33] pr-3371/gpt-oss-120b: running mini-swe-agent (openrouter/openai/gpt-oss-120b), timeout=967s (4x completed-peer average)
+[2026-07-03 22:32:45] pr-3371/gpt-oss-120b: no submission (exit_status=RepeatedFormatError), skipping grading
+[2026-07-03 22:32:45] pr-3371/gpt-oss-120b: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 0/0
+[2026-07-03 22:32:45] === batch complete ===
+[2026-07-03 23:19:59] === batch start: 1 PRs x 1 models = 1 combos, 0 already done ===
+[2026-07-03 23:19:59] pr-3411: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=1, PASS_TO_PASS=3
+[2026-07-03 23:19:59] pr-3411/kimi-k2.7-code: running mini-swe-agent (openrouter/moonshotai/kimi-k2.7-code), timeout=349s (4x completed-peer average)
+[2026-07-03 23:21:20] pr-3411/kimi-k2.7-code: submitted 2754 chars in 81s, grading...
+[2026-07-03 23:21:24] pr-3411/kimi-k2.7-code: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 0/3
+[2026-07-03 23:21:24] === batch complete ===

@@ -1,0 +1,80 @@
+[2026-07-03 21:51:01] === opus batch start: 10 PRs, model=openrouter/anthropic/claude-opus-4.8 (reasoning=high), 1 already done ===
+[2026-07-03 21:51:01] pr-3672: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=4, PASS_TO_PASS=14
+[2026-07-03 21:51:01] pr-3672/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=272s (4x completed-peer average)
+This is mini-swe-agent version 2.4.4.
+Check the v2 migration guide at https://klieret.short.gy/mini-v2-migration
+Loading global config from 
+'C:\Users\hsgod\AppData\Local\mini-swe-agent\mini-swe-agent\.env'
+minisweagent.environment: DEBUG: Starting container with command: docker run -d
+--name minisweagent-c3cef8e5 -w /repo --rm --entrypoint '' --network none      
+nltk-agent-safe:pr-3672 sleep 2h                                               
+minisweagent.environment: INFO: Started container minisweagent-c3cef8e5 with ID
+d29b6a474fa727bad4acb36003ecdc6b083eb07df3bc5f1f64418bb72d4c25d5               
+[2026-07-03 21:51:46] pr-3672/claude-opus-4.8-high: submitted 1961 chars in 45s, grading...
+[2026-07-03 21:51:52] pr-3672/claude-opus-4.8-high: DONE -- resolved=False FAIL_TO_PASS 2/4 PASS_TO_PASS 14/14
+[2026-07-03 21:51:52] pr-3644: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=4, PASS_TO_PASS=52
+[2026-07-03 21:51:52] pr-3644/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=937s (4x completed-peer average)
+minisweagent.environment: DEBUG: Starting container with command: docker run -d
+--name minisweagent-d9fc4678 -w /repo --rm --entrypoint '' --network none      
+nltk-agent-safe:pr-3644 sleep 2h                                               
+minisweagent.environment: INFO: Started container minisweagent-d9fc4678 with ID
+3acd037ecbccd4d77989795ea97c780e789fd83b38f4bf7260e44dafdc3ea59e               
+[2026-07-03 21:53:07] pr-3644/claude-opus-4.8-high: submitted 4383 chars in 75s, grading...
+[2026-07-03 21:53:10] pr-3644/claude-opus-4.8-high: DONE -- resolved=True FAIL_TO_PASS 4/4 PASS_TO_PASS 52/52
+[2026-07-03 21:53:10] pr-3641: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=2, PASS_TO_PASS=0
+[2026-07-03 21:53:10] pr-3641/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=264s (4x completed-peer average)
+minisweagent.environment: DEBUG: Starting container with command: docker run -d
+--name minisweagent-0767c821 -w /repo --rm --entrypoint '' --network none      
+nltk-agent-safe:pr-3641 sleep 2h                                               
+minisweagent.environment: INFO: Started container minisweagent-0767c821 with ID
+8c9cb03b5daf699a871159b720068276ee377dc990dea5ec1249405ab431b5c5               
+[2026-07-03 21:53:32] pr-3641/claude-opus-4.8-high: submitted 667 chars in 22s, grading...
+[2026-07-03 21:53:38] pr-3641/claude-opus-4.8-high: DONE -- resolved=True FAIL_TO_PASS 2/2 PASS_TO_PASS 0/0
+[2026-07-03 21:53:38] pr-3544: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=1, PASS_TO_PASS=1
+[2026-07-03 21:53:38] pr-3544/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=397s (4x completed-peer average)
+minisweagent.environment: DEBUG: Starting container with command: docker run -d
+--name minisweagent-50d28fe5 -w /repo --rm --entrypoint '' --network none      
+nltk-agent-safe:pr-3544 sleep 2h                                               
+minisweagent.environment: INFO: Started container minisweagent-50d28fe5 with ID
+d6fe725bd953ef33303aba94976969f4aa9f2fa82c4c5da9582ae5979a4c307b               
+[2026-07-03 21:54:24] pr-3544/claude-opus-4.8-high: submitted 1049 chars in 46s, grading...
+[2026-07-03 21:54:27] pr-3544/claude-opus-4.8-high: DONE -- resolved=True FAIL_TO_PASS 1/1 PASS_TO_PASS 1/1
+[2026-07-03 21:54:27] pr-3487/claude-opus-4.8-high: already done, skipping
+[2026-07-03 21:54:27] pr-3474: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=32, PASS_TO_PASS=0
+[2026-07-03 21:54:27] pr-3474/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=1223s (4x completed-peer average)
+minisweagent.environment: DEBUG: Starting container with command: docker run -d
+--name minisweagent-5ea0f7be -w /repo --rm --entrypoint '' --network none      
+nltk-agent-safe:pr-3474 sleep 2h                                               
+minisweagent.environment: INFO: Started container minisweagent-5ea0f7be with ID
+f18868f70dd549672245d1ef91730ab13a6ce1a14020dfe9b4467c0de0d5e22c               
+[2026-07-03 22:03:19] pr-3474/claude-opus-4.8-high: submitted 3497 chars in 532s, grading...
+[2026-07-03 22:07:26] pr-3474/claude-opus-4.8-high: DONE -- resolved=False FAIL_TO_PASS 1/32 PASS_TO_PASS 0/0
+[2026-07-03 22:07:27] pr-3460: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=1, PASS_TO_PASS=5
+[2026-07-03 22:07:29] pr-3460/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=1582s (4x completed-peer average)
+minisweagent.environment: DEBUG: Starting container with command: docker run -d
+--name minisweagent-f0d3492f -w /repo --rm --entrypoint '' --network none      
+nltk-agent-safe:pr-3460 sleep 2h                                               
+minisweagent.environment: INFO: Started container minisweagent-f0d3492f with ID
+acb5eec4878e7a445f4c184871267e7c874837505f96b7ae43cca4b13d92fb15               
+[2026-07-03 22:16:48] pr-3460/claude-opus-4.8-high: submitted 1679 chars in 559s, grading...
+[2026-07-03 22:16:52] pr-3460/claude-opus-4.8-high: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 5/5
+[2026-07-03 22:16:52] pr-3451: SKIPPING -- no verified FAIL_TO_PASS tests for this task (status=no_discriminating_tests)
+[2026-07-03 22:16:52] pr-3411: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=1, PASS_TO_PASS=3
+[2026-07-03 22:16:53] pr-3411/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=363s (4x completed-peer average)
+minisweagent.environment: DEBUG: Starting container with command: docker run -d
+--name minisweagent-cf3683a2 -w /repo --rm --entrypoint '' --network none      
+nltk-agent-safe:pr-3411 sleep 2h                                               
+minisweagent.environment: INFO: Started container minisweagent-cf3683a2 with ID
+d89bbaffa4e0f44f2dc595d68b89a1ade81e2f6725b4b5e2e0ee83713209303c               
+[2026-07-03 22:18:13] pr-3411/claude-opus-4.8-high: submitted 2942 chars in 81s, grading...
+[2026-07-03 22:19:07] pr-3411/claude-opus-4.8-high: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 0/3
+[2026-07-03 22:19:07] pr-3371: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=1, PASS_TO_PASS=0
+[2026-07-03 22:19:12] pr-3371/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=696s (4x completed-peer average)
+minisweagent.environment: DEBUG: Starting container with command: docker run -d
+--name minisweagent-27b6994f -w /repo --rm --entrypoint '' --network none      
+nltk-agent-safe:pr-3371 sleep 2h                                               
+minisweagent.environment: INFO: Started container minisweagent-27b6994f with ID
+bf5cbcb2d8c6bca25787d167d56151babdff8cd4328f1c8b0ac0cd94f4398af1               
+[2026-07-03 22:22:04] pr-3371/claude-opus-4.8-high: submitted 2819 chars in 172s, grading...
+[2026-07-03 22:22:51] pr-3371/claude-opus-4.8-high: DONE -- resolved=True FAIL_TO_PASS 1/1 PASS_TO_PASS 0/0
+[2026-07-03 22:22:51] === opus batch complete ===

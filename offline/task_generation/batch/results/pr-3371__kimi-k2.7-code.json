@@ -1,0 +1,20 @@
+{
+  "pr_number": 3371,
+  "model_key": "kimi-k2.7-code",
+  "model_name": "openrouter/moonshotai/kimi-k2.7-code",
+  "exit_status": "Submitted",
+  "elapsed_seconds": 312.0,
+  "submission_chars": 3123,
+  "resolved": true,
+  "fail_to_pass_total": 1,
+  "fail_to_pass_passed": 1,
+  "pass_to_pass_total": 0,
+  "pass_to_pass_passed": 0,
+  "detail": {
+    "resolved": true,
+    "FAIL_TO_PASS": {
+      "grammar.doctest::grammar.doctest": "passed"
+    },
+    "PASS_TO_PASS": {}
+  }
+}

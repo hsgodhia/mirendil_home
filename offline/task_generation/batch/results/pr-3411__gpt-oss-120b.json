@@ -1,0 +1,18 @@
+{
+  "pr_number": 3411,
+  "model_key": "gpt-oss-120b",
+  "model_name": "openrouter/openai/gpt-oss-120b",
+  "exit_status": "TimedOut",
+  "elapsed_seconds": 362.7,
+  "submission_chars": 0,
+  "resolved": false,
+  "fail_to_pass_total": 1,
+  "fail_to_pass_passed": 0,
+  "pass_to_pass_total": 3,
+  "pass_to_pass_passed": 0,
+  "detail": {
+    "resolved": false,
+    "FAIL_TO_PASS": {},
+    "PASS_TO_PASS": {}
+  }
+}

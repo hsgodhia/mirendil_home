@@ -1,0 +1,33 @@
+{
+  "pr_number": 3460,
+  "model_key": "claude-opus-4.8-high",
+  "model_name": "openrouter/anthropic/claude-opus-4.8",
+  "model_kwargs": {
+    "extra_body": {
+      "reasoning": {
+        "effort": "high"
+      }
+    }
+  },
+  "exit_status": "Submitted",
+  "elapsed_seconds": 559.0,
+  "submission_chars": 1679,
+  "resolved": false,
+  "fail_to_pass_total": 1,
+  "fail_to_pass_passed": 0,
+  "pass_to_pass_total": 5,
+  "pass_to_pass_passed": 5,
+  "detail": {
+    "resolved": false,
+    "FAIL_TO_PASS": {
+      "unit/test_corpus_util.py::test_dunder_access_does_not_trigger_load": "failed"
+    },
+    "PASS_TO_PASS": {
+      "unit/test_corpus_util.py::TestMakeBoundMethod::test_bound_method_has_correct_self": "passed",
+      "unit/test_corpus_util.py::TestMakeBoundMethod::test_bound_method_with_arguments": "passed",
+      "unit/test_corpus_util.py::TestMakeBoundMethod::test_creates_bound_method": "passed",
+      "unit/test_corpus_util.py::test_load_unload_reload_cycle": "passed",
+      "unit/test_corpus_util.py::test_repr_not_loaded": "passed"
+    }
+  }
+}

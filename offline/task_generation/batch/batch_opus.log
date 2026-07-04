@@ -1,0 +1,42 @@
+[2026-07-03 21:48:18] === opus batch start: 1 PRs, model=openrouter/anthropic/claude-opus-4.8 (reasoning=high), 0 already done ===
+[2026-07-03 21:48:19] pr-3487: problem statement source = issue #3486, FAIL_TO_PASS=1, PASS_TO_PASS=0
+[2026-07-03 21:48:19] pr-3487/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=337s (4x completed-peer average)
+[2026-07-03 21:49:14] pr-3487/claude-opus-4.8-high: submitted 2385 chars in 55s, grading...
+[2026-07-03 21:49:18] pr-3487/claude-opus-4.8-high: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 0/0
+[2026-07-03 21:49:18] === opus batch complete ===
+[2026-07-03 21:51:01] === opus batch start: 10 PRs, model=openrouter/anthropic/claude-opus-4.8 (reasoning=high), 1 already done ===
+[2026-07-03 21:51:01] pr-3672: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=4, PASS_TO_PASS=14
+[2026-07-03 21:51:01] pr-3672/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=272s (4x completed-peer average)
+[2026-07-03 21:51:46] pr-3672/claude-opus-4.8-high: submitted 1961 chars in 45s, grading...
+[2026-07-03 21:51:52] pr-3672/claude-opus-4.8-high: DONE -- resolved=False FAIL_TO_PASS 2/4 PASS_TO_PASS 14/14
+[2026-07-03 21:51:52] pr-3644: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=4, PASS_TO_PASS=52
+[2026-07-03 21:51:52] pr-3644/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=937s (4x completed-peer average)
+[2026-07-03 21:53:07] pr-3644/claude-opus-4.8-high: submitted 4383 chars in 75s, grading...
+[2026-07-03 21:53:10] pr-3644/claude-opus-4.8-high: DONE -- resolved=True FAIL_TO_PASS 4/4 PASS_TO_PASS 52/52
+[2026-07-03 21:53:10] pr-3641: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=2, PASS_TO_PASS=0
+[2026-07-03 21:53:10] pr-3641/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=264s (4x completed-peer average)
+[2026-07-03 21:53:32] pr-3641/claude-opus-4.8-high: submitted 667 chars in 22s, grading...
+[2026-07-03 21:53:38] pr-3641/claude-opus-4.8-high: DONE -- resolved=True FAIL_TO_PASS 2/2 PASS_TO_PASS 0/0
+[2026-07-03 21:53:38] pr-3544: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=1, PASS_TO_PASS=1
+[2026-07-03 21:53:38] pr-3544/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=397s (4x completed-peer average)
+[2026-07-03 21:54:24] pr-3544/claude-opus-4.8-high: submitted 1049 chars in 46s, grading...
+[2026-07-03 21:54:27] pr-3544/claude-opus-4.8-high: DONE -- resolved=True FAIL_TO_PASS 1/1 PASS_TO_PASS 1/1
+[2026-07-03 21:54:27] pr-3487/claude-opus-4.8-high: already done, skipping
+[2026-07-03 21:54:27] pr-3474: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=32, PASS_TO_PASS=0
+[2026-07-03 21:54:27] pr-3474/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=1223s (4x completed-peer average)
+[2026-07-03 22:03:19] pr-3474/claude-opus-4.8-high: submitted 3497 chars in 532s, grading...
+[2026-07-03 22:07:26] pr-3474/claude-opus-4.8-high: DONE -- resolved=False FAIL_TO_PASS 1/32 PASS_TO_PASS 0/0
+[2026-07-03 22:07:27] pr-3460: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=1, PASS_TO_PASS=5
+[2026-07-03 22:07:29] pr-3460/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=1582s (4x completed-peer average)
+[2026-07-03 22:16:48] pr-3460/claude-opus-4.8-high: submitted 1679 chars in 559s, grading...
+[2026-07-03 22:16:52] pr-3460/claude-opus-4.8-high: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 5/5
+[2026-07-03 22:16:52] pr-3451: SKIPPING -- no verified FAIL_TO_PASS tests for this task (status=no_discriminating_tests)
+[2026-07-03 22:16:52] pr-3411: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=1, PASS_TO_PASS=3
+[2026-07-03 22:16:53] pr-3411/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=363s (4x completed-peer average)
+[2026-07-03 22:18:13] pr-3411/claude-opus-4.8-high: submitted 2942 chars in 81s, grading...
+[2026-07-03 22:19:07] pr-3411/claude-opus-4.8-high: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 0/3
+[2026-07-03 22:19:07] pr-3371: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=1, PASS_TO_PASS=0
+[2026-07-03 22:19:12] pr-3371/claude-opus-4.8-high: running mini-swe-agent (openrouter/anthropic/claude-opus-4.8, reasoning=high), timeout=696s (4x completed-peer average)
+[2026-07-03 22:22:04] pr-3371/claude-opus-4.8-high: submitted 2819 chars in 172s, grading...
+[2026-07-03 22:22:51] pr-3371/claude-opus-4.8-high: DONE -- resolved=True FAIL_TO_PASS 1/1 PASS_TO_PASS 0/0
+[2026-07-03 22:22:51] === opus batch complete ===

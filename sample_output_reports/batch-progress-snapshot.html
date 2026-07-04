@@ -3,20 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Batch progress: 10 PRs × 4 models</title>
+<title>Batch progress: 9 PRs × 5 models</title>
 <style>
   :root {
-    --bg: #f3f4f1;
-    --surface: #ffffff;
-    --surface-2: #eceee9;
-    --ink: #1c2320;
-    --muted: #5b655e;
-    --rule: #daddd4;
-    --accent: #35578c;
-    --pass: #2f7a4f;
-    --pass-bg: #ebf5ee;
-    --fail: #b3392f;
-    --fail-bg: #fbebe9;
+    --bg: #f3f4f1; --surface: #ffffff; --surface-2: #eceee9;
+    --ink: #1c2320; --muted: #5b655e; --rule: #daddd4; --accent: #35578c;
+    --pass: #2f7a4f; --pass-bg: #ebf5ee; --fail: #b3392f; --fail-bg: #fbebe9;
     --shadow: 0 1px 2px rgba(28,35,32,0.06), 0 8px 24px rgba(28,35,32,0.05);
   }
   @media (prefers-color-scheme: dark) {
@@ -33,14 +25,13 @@
     --pass: #379c65; --pass-bg: #163524; --fail: #d9584a; --fail-bg: #3a201d;
     --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
   }
-
   * { box-sizing: border-box; }
   body {
     margin: 0; background: var(--bg); color: var(--ink);
     font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased;
   }
-  .page { max-width: 920px; margin: 0 auto; padding: 56px 24px 96px; }
+  .page { max-width: 1040px; margin: 0 auto; padding: 56px 24px 96px; }
   .eyebrow {
     font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
     font-size: 12.5px; letter-spacing: 0.09em; text-transform: uppercase;
@@ -51,7 +42,7 @@
     font-size: 32px; font-weight: 600; line-height: 1.22; letter-spacing: -0.01em;
     margin: 0 0 10px; text-wrap: balance;
   }
-  .dek { color: var(--muted); font-size: 16.5px; margin: 0 0 24px; max-width: 68ch; }
+  .dek { color: var(--muted); font-size: 16.5px; margin: 0 0 24px; max-width: 72ch; }
   .meta-row {
     display: flex; flex-wrap: wrap; gap: 8px 22px; padding: 16px 0 32px;
     border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--muted);
@@ -67,23 +58,18 @@
     font-family: Constantia, Charter, Georgia, "Times New Roman", serif;
     font-size: 21px; font-weight: 600; margin: 0 0 6px;
   }
-  .h2-note { color: var(--muted); font-size: 14.5px; margin: 0 0 20px; max-width: 68ch; }
-
-  /* histogram */
+  .h2-note { color: var(--muted); font-size: 14.5px; margin: 0 0 20px; max-width: 72ch; }
   .chart {
     background: var(--surface); border: 1px solid var(--rule); border-radius: 8px;
     padding: 22px 24px; box-shadow: var(--shadow);
   }
-  .bar-row { display: grid; grid-template-columns: 130px 1fr 90px; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .bar-row { display: grid; grid-template-columns: 170px 1fr 90px; align-items: center; gap: 14px; margin-bottom: 14px; }
   .bar-row:last-child { margin-bottom: 0; }
   .bar-label {
     font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
     font-size: 13px; color: var(--ink); text-align: right;
   }
-  .bar-track {
-    display: flex; height: 22px; border-radius: 4px; overflow: hidden;
-    background: var(--surface-2);
-  }
+  .bar-track { display: flex; height: 22px; border-radius: 4px; overflow: hidden; background: var(--surface-2); }
   .bar-seg { display: flex; align-items: center; justify-content: center; height: 100%; }
   .bar-seg.pass { background: var(--pass); }
   .bar-seg.fail { background: var(--fail); }
@@ -100,8 +86,6 @@
   .legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
   .legend i.pass { background: var(--pass); }
   .legend i.fail { background: var(--fail); }
-
-  /* PR groups */
   .pr-group {
     background: var(--surface); border: 1px solid var(--rule); border-radius: 8px;
     margin-bottom: 16px; overflow: hidden; box-shadow: var(--shadow);
@@ -115,18 +99,13 @@
     font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
     color: var(--muted); font-size: 13px;
   }
-  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-  th, td { text-align: left; padding: 10px 20px; border-bottom: 1px solid var(--rule); }
+  .pr-group table { display: block; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 9px 16px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
   tr:last-child td { border-bottom: none; }
-  th {
-    font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;
-    color: var(--muted); font-weight: 600;
-  }
-  td.model { font-weight: 600; }
-  td.num {
-    font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
-    font-variant-numeric: tabular-nums;
-  }
+  th { font-size: 10.5px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  td.model { font-weight: 600; white-space: normal; }
+  td.num { font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace; font-variant-numeric: tabular-nums; }
   .status-chip {
     font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
     font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
@@ -134,65 +113,67 @@
   }
   .status-chip.pass { color: var(--pass); background: var(--pass-bg); }
   .status-chip.fail { color: var(--fail); background: var(--fail-bg); }
-  .note { color: var(--muted); font-size: 12.5px; }
-
-  footer {
-    margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--rule);
-    font-size: 13px; color: var(--muted);
-  }
-  @media (max-width: 640px) {
-    .bar-row { grid-template-columns: 90px 1fr 70px; }
-    h1 { font-size: 27px; }
-  }
+  .note { color: var(--muted); font-size: 11.5px; }
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--muted); }
+  @media (max-width: 640px) { .bar-row { grid-template-columns: 90px 1fr 70px; } h1 { font-size: 27px; } }
 </style>
 </head>
 <body>
 <div class="page">
 
-  <p class="eyebrow">Batch evaluation · in progress</p>
-  <h1>10 PRs × 4 models — live progress snapshot</h1>
-  <p class="dek">mini-swe-agent attempting real, previously-unseen NLTK bug fixes, each graded against its PR's actual FAIL_TO_PASS/PASS_TO_PASS test suite in an isolated (single-commit, network-blocked) agent environment. Snapshot taken mid-run — 7 of 10 PRs fully processed so far.</p>
+  <p class="eyebrow">Batch evaluation · complete</p>
+  <h1>9 PRs × 5 models — full results</h1>
+  <p class="dek">mini-swe-agent attempting real, previously-unseen NLTK bug fixes, each graded against its PR's actual FAIL_TO_PASS/PASS_TO_PASS test suite in an isolated (single-commit, network-blocked) agent environment. Time, token usage, and step count pulled from each run's actual trajectory, not estimated.</p>
 
   <dl class="meta-row">
     <div><dt>Repo</dt> <code>nltk/nltk</code></div>
-    <div><dt>Models</dt> <code>laguna</code>, <code>gemini-3.5-flash</code>, <code>kimi-k2.7-code</code>, <code>gpt-oss-120b</code></div>
-    <div><dt>Combos done</dt> 27 / 40</div>
+    <div><dt>PRs</dt> 9 (1 of the original 10 excluded — no discriminating test could be derived)</div>
+    <div><dt>Combos</dt> 45 / 45</div>
   </dl>
 
   <section>
-    <h2>Resolved rate per model, so far</h2>
-    <p class="h2-note">Stacked by outcome, out of the PRs each model has attempted at snapshot time (gpt-oss-120b's 7th attempt was still in flight when this snapshot was taken).</p>
+    <h2>Resolved rate per model</h2>
+    <p class="h2-note">Stacked by outcome, out of all 9 PRs each model attempted.</p>
     <div class="chart">
+      
       <div class="bar-row">
         <div class="bar-label">laguna</div>
         <div class="bar-track">
           <div class="bar-seg pass" style="flex:3"><span>3 resolved</span></div>
-          <div class="bar-seg fail" style="flex:4"><span>4</span></div>
+          <div class="bar-seg fail" style="flex:6"><span>6</span></div>
         </div>
-        <div class="bar-total">3 / 7</div>
+        <div class="bar-total">3 / 9</div>
       </div>
       <div class="bar-row">
         <div class="bar-label">gemini-3.5-flash</div>
         <div class="bar-track">
           <div class="bar-seg pass" style="flex:3"><span>3 resolved</span></div>
-          <div class="bar-seg fail" style="flex:4"><span>4</span></div>
+          <div class="bar-seg fail" style="flex:6"><span>6</span></div>
         </div>
-        <div class="bar-total">3 / 7</div>
+        <div class="bar-total">3 / 9</div>
       </div>
       <div class="bar-row">
         <div class="bar-label">kimi-k2.7-code</div>
         <div class="bar-track">
-          <div class="bar-seg pass" style="flex:3"><span>3 resolved</span></div>
-          <div class="bar-seg fail" style="flex:4"><span>4</span></div>
+          <div class="bar-seg pass" style="flex:4"><span>4 resolved</span></div>
+          <div class="bar-seg fail" style="flex:5"><span>5</span></div>
         </div>
-        <div class="bar-total">3 / 7</div>
+        <div class="bar-total">4 / 9</div>
       </div>
       <div class="bar-row">
         <div class="bar-label">gpt-oss-120b</div>
         <div class="bar-track">
-          <div class="bar-seg fail" style="flex:6"><span>0 resolved / 6 attempted</span></div>
+          <div class="bar-seg fail" style="flex:9"><span>0 resolved / 9 attempted</span></div>
         </div>
-        <div class="bar-total">0 / 6</div>
+        <div class="bar-total">0 / 9</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">claude-opus-4.8 (reasoning=high)</div>
+        <div class="bar-track">
+          <div class="bar-seg pass" style="flex:4"><span>4 resolved</span></div>
+          <div class="bar-seg fail" style="flex:5"><span>5</span></div>
+        </div>
+        <div class="bar-total">4 / 9</div>
       </div>
       <div class="legend">
         <span><i class="pass"></i> Resolved</span>
@@ -203,118 +184,109 @@
 
   <section>
     <h2>Per-PR, per-model breakdown</h2>
-    <p class="h2-note">FAIL_TO_PASS = the PR's real regression tests (must go from failing to passing). PASS_TO_PASS = unrelated pre-existing tests that must not regress.</p>
-
+    <p class="h2-note">FAIL_TO_PASS = the PR's real regression tests (must go from failing to passing). PASS_TO_PASS = unrelated pre-existing tests that must not regress. Time/tokens/steps are pulled from each run's actual trajectory.</p>
+    
     <div class="pr-group">
       <div class="pr-head">
-        <span class="title">#3672 — DoS via quadratic complexity in segmentation metrics</span>
+        <span class="title">#3672 — fix(security): Denial of service via quadratic complexity in NLTK segmentation metrics</span>
         <span class="num">security_fix</span>
       </div>
       <table>
-        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Resolved</th></tr>
-        <tr><td class="model">laguna</td><td class="num">2 / 4</td><td class="num">14 / 14</td><td><span class="status-chip fail">No</span></td></tr>
-        <tr><td class="model">gemini-3.5-flash</td><td class="num">2 / 4</td><td class="num">14 / 14</td><td><span class="status-chip fail">No</span></td></tr>
-        <tr><td class="model">kimi-k2.7-code</td><td class="num">2 / 4</td><td class="num">14 / 14</td><td><span class="status-chip fail">No</span></td></tr>
-        <tr><td class="model">gpt-oss-120b</td><td class="num">0 / 4</td><td class="num">0 / 14</td><td><span class="status-chip fail">No</span></td></tr>
+        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Time</th><th>Input tok</th><th>Output tok</th><th>Steps</th><th>Resolved</th></tr>
+        <tr><td class="model">laguna</td><td class="num">2 / 4</td><td class="num">14 / 14</td><td class="num">1m 58s</td><td class="num">714,918</td><td class="num">13,165</td><td class="num">35</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">gemini-3.5-flash</td><td class="num">2 / 4</td><td class="num">14 / 14</td><td class="num">30s</td><td class="num">95,243</td><td class="num">1,375</td><td class="num">12</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">kimi-k2.7-code</td><td class="num">2 / 4</td><td class="num">14 / 14</td><td class="num">1m 33s</td><td class="num">96,593</td><td class="num">3,905</td><td class="num">11</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">gpt-oss-120b <span class="note">(RepeatedFormatError)</span></td><td class="num">0 / 4</td><td class="num">0 / 14</td><td class="num">31s</td><td class="num">15,268</td><td class="num">146</td><td class="num">3</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">claude-opus-4.8 (reasoning=high)</td><td class="num">2 / 4</td><td class="num">14 / 14</td><td class="num">45s</td><td class="num">51,560</td><td class="num">2,145</td><td class="num">8</td><td><span class="status-chip fail">No</span></td></tr>
       </table>
     </div>
-
     <div class="pr-group">
       <div class="pr-head">
-        <span class="title">#3644 — Block IPv6 transition-embedded internal IPv4 in SSRF filter (NAT64 bypass, CWE-918)</span>
+        <span class="title">#3644 — fix(security): block IPv6 transition-embedded internal IPv4 in SSRF filter (NAT64 bypass, CWE-918)</span>
         <span class="num">security_fix</span>
       </div>
       <table>
-        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Resolved</th></tr>
-        <tr><td class="model">laguna</td><td class="num">4 / 4</td><td class="num">52 / 52</td><td><span class="status-chip pass">Yes</span></td></tr>
-        <tr><td class="model">gemini-3.5-flash</td><td class="num">4 / 4</td><td class="num">52 / 52</td><td><span class="status-chip pass">Yes</span></td></tr>
-        <tr><td class="model">kimi-k2.7-code</td><td class="num">4 / 4</td><td class="num">52 / 52</td><td><span class="status-chip pass">Yes</span></td></tr>
-        <tr><td class="model">gpt-oss-120b</td><td class="num">0 / 4</td><td class="num">0 / 52</td><td><span class="status-chip fail">No</span></td></tr>
+        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Time</th><th>Input tok</th><th>Output tok</th><th>Steps</th><th>Resolved</th></tr>
+        <tr><td class="model">laguna</td><td class="num">4 / 4</td><td class="num">52 / 52</td><td class="num">4m 44s</td><td class="num">2,081,115</td><td class="num">26,594</td><td class="num">59</td><td><span class="status-chip pass">Yes</span></td></tr><tr><td class="model">gemini-3.5-flash</td><td class="num">4 / 4</td><td class="num">52 / 52</td><td class="num">2m 02s</td><td class="num">1,133,324</td><td class="num">9,836</td><td class="num">56</td><td><span class="status-chip pass">Yes</span></td></tr><tr><td class="model">kimi-k2.7-code</td><td class="num">4 / 4</td><td class="num">52 / 52</td><td class="num">2m 33s</td><td class="num">444,980</td><td class="num">4,909</td><td class="num">37</td><td><span class="status-chip pass">Yes</span></td></tr><tr><td class="model">gpt-oss-120b <span class="note">(RepeatedFormatError)</span></td><td class="num">0 / 4</td><td class="num">0 / 52</td><td class="num">6m 17s</td><td class="num">633,608</td><td class="num">17,492</td><td class="num">40</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">claude-opus-4.8 (reasoning=high)</td><td class="num">4 / 4</td><td class="num">52 / 52</td><td class="num">1m 14s</td><td class="num">134,847</td><td class="num">4,551</td><td class="num">13</td><td><span class="status-chip pass">Yes</span></td></tr>
       </table>
     </div>
-
     <div class="pr-group">
       <div class="pr-head">
-        <span class="title">#3641 — Stop quadratic ReDoS in CCG lexicon parsing (CWE-1333)</span>
+        <span class="title">#3641 — fix(security): stop quadratic ReDoS in CCG lexicon parsing (CWE-1333)</span>
         <span class="num">security_fix</span>
       </div>
       <table>
-        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Resolved</th></tr>
-        <tr><td class="model">laguna</td><td class="num">2 / 2</td><td class="num">— (0)</td><td><span class="status-chip pass">Yes</span></td></tr>
-        <tr><td class="model">gemini-3.5-flash</td><td class="num">2 / 2</td><td class="num">— (0)</td><td><span class="status-chip pass">Yes</span></td></tr>
-        <tr><td class="model">kimi-k2.7-code</td><td class="num">2 / 2</td><td class="num">— (0)</td><td><span class="status-chip pass">Yes</span></td></tr>
-        <tr><td class="model">gpt-oss-120b</td><td class="num">0 / 2</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
+        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Time</th><th>Input tok</th><th>Output tok</th><th>Steps</th><th>Resolved</th></tr>
+        <tr><td class="model">laguna</td><td class="num">2 / 2</td><td class="num">— (0)</td><td class="num">2m 16s</td><td class="num">782,132</td><td class="num">14,079</td><td class="num">55</td><td><span class="status-chip pass">Yes</span></td></tr><tr><td class="model">gemini-3.5-flash</td><td class="num">2 / 2</td><td class="num">— (0)</td><td class="num">31s</td><td class="num">59,056</td><td class="num">1,252</td><td class="num">17</td><td><span class="status-chip pass">Yes</span></td></tr><tr><td class="model">kimi-k2.7-code</td><td class="num">2 / 2</td><td class="num">— (0)</td><td class="num">1m 20s</td><td class="num">95,512</td><td class="num">3,370</td><td class="num">17</td><td><span class="status-chip pass">Yes</span></td></tr><tr><td class="model">gpt-oss-120b <span class="note">(RepeatedFormatError)</span></td><td class="num">0 / 2</td><td class="num">— (0)</td><td class="num">16s</td><td class="num">7,004</td><td class="num">119</td><td class="num">2</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">claude-opus-4.8 (reasoning=high)</td><td class="num">2 / 2</td><td class="num">— (0)</td><td class="num">22s</td><td class="num">26,707</td><td class="num">782</td><td class="num">7</td><td><span class="status-chip pass">Yes</span></td></tr>
       </table>
     </div>
-
     <div class="pr-group">
       <div class="pr-head">
-        <span class="title">#3544 — Block XML entity expansion (XXE) in downloader</span>
+        <span class="title">#3544 — fix(security): block XML entity expansion (XXE) in downloader</span>
         <span class="num">security_fix</span>
       </div>
       <table>
-        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Resolved</th></tr>
-        <tr><td class="model">laguna</td><td class="num">1 / 1</td><td class="num">1 / 1</td><td><span class="status-chip pass">Yes</span></td></tr>
-        <tr><td class="model">gemini-3.5-flash</td><td class="num">1 / 1</td><td class="num">1 / 1</td><td><span class="status-chip pass">Yes</span></td></tr>
-        <tr><td class="model">kimi-k2.7-code</td><td class="num">1 / 1</td><td class="num">1 / 1</td><td><span class="status-chip pass">Yes</span></td></tr>
-        <tr><td class="model">gpt-oss-120b</td><td class="num">0 / 1</td><td class="num">0 / 1</td><td><span class="status-chip fail">No</span></td></tr>
+        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Time</th><th>Input tok</th><th>Output tok</th><th>Steps</th><th>Resolved</th></tr>
+        <tr><td class="model">laguna</td><td class="num">1 / 1</td><td class="num">1 / 1</td><td class="num">1m 57s</td><td class="num">1,207,876</td><td class="num">10,033</td><td class="num">57</td><td><span class="status-chip pass">Yes</span></td></tr><tr><td class="model">gemini-3.5-flash</td><td class="num">1 / 1</td><td class="num">1 / 1</td><td class="num">1m 37s</td><td class="num">274,587</td><td class="num">6,253</td><td class="num">30</td><td><span class="status-chip pass">Yes</span></td></tr><tr><td class="model">kimi-k2.7-code</td><td class="num">1 / 1</td><td class="num">1 / 1</td><td class="num">2m 25s</td><td class="num">202,259</td><td class="num">7,323</td><td class="num">22</td><td><span class="status-chip pass">Yes</span></td></tr><tr><td class="model">gpt-oss-120b <span class="note">(RepeatedFormatError)</span></td><td class="num">0 / 1</td><td class="num">0 / 1</td><td class="num">37s</td><td class="num">47,453</td><td class="num">687</td><td class="num">8</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">claude-opus-4.8 (reasoning=high)</td><td class="num">1 / 1</td><td class="num">1 / 1</td><td class="num">46s</td><td class="num">52,866</td><td class="num">1,784</td><td class="num">13</td><td><span class="status-chip pass">Yes</span></td></tr>
       </table>
     </div>
-
     <div class="pr-group">
       <div class="pr-head">
         <span class="title">#3487 — Warn on unpickling user-provided pickles</span>
         <span class="num">security_fix</span>
       </div>
       <table>
-        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Resolved</th></tr>
-        <tr><td class="model">laguna</td><td class="num">0 / 1</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
-        <tr><td class="model">gemini-3.5-flash</td><td class="num">0 / 1</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
-        <tr><td class="model">kimi-k2.7-code</td><td class="num">0 / 1</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
-        <tr><td class="model">gpt-oss-120b</td><td class="num">0 / 1</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
+        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Time</th><th>Input tok</th><th>Output tok</th><th>Steps</th><th>Resolved</th></tr>
+        <tr><td class="model">laguna</td><td class="num">0 / 1</td><td class="num">— (0)</td><td class="num">1m 28s</td><td class="num">1,472,939</td><td class="num">6,511</td><td class="num">75</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">gemini-3.5-flash</td><td class="num">0 / 1</td><td class="num">— (0)</td><td class="num">22s</td><td class="num">43,683</td><td class="num">1,338</td><td class="num">11</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">kimi-k2.7-code</td><td class="num">0 / 1</td><td class="num">— (0)</td><td class="num">1m 05s</td><td class="num">102,589</td><td class="num">2,446</td><td class="num">13</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">gpt-oss-120b</td><td class="num">0 / 1</td><td class="num">— (0)</td><td class="num">2m 41s</td><td class="num">369,977</td><td class="num">6,396</td><td class="num">37</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">claude-opus-4.8 (reasoning=high)</td><td class="num">0 / 1</td><td class="num">— (0)</td><td class="num">55s</td><td class="num">65,884</td><td class="num">2,357</td><td class="num">12</td><td><span class="status-chip fail">No</span></td></tr>
       </table>
     </div>
-
     <div class="pr-group">
       <div class="pr-head">
         <span class="title">#3474 — Support some zipped models</span>
         <span class="num">bug_fix</span>
       </div>
       <table>
-        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Resolved</th></tr>
-        <tr><td class="model">laguna</td><td class="num">1 / 32</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
-        <tr><td class="model">gemini-3.5-flash</td><td class="num">1 / 32</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
-        <tr><td class="model">kimi-k2.7-code</td><td class="num">1 / 32</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
-        <tr><td class="model">gpt-oss-120b</td><td class="num">0 / 32</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
+        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Time</th><th>Input tok</th><th>Output tok</th><th>Steps</th><th>Resolved</th></tr>
+        <tr><td class="model">laguna</td><td class="num">1 / 32</td><td class="num">— (0)</td><td class="num">4m 50s</td><td class="num">4,403,076</td><td class="num">23,350</td><td class="num">104</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">gemini-3.5-flash</td><td class="num">1 / 32</td><td class="num">— (0)</td><td class="num">4m 09s</td><td class="num">1,616,826</td><td class="num">4,310</td><td class="num">82</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">kimi-k2.7-code</td><td class="num">1 / 32</td><td class="num">— (0)</td><td class="num">11m 16s</td><td class="num">2,606,156</td><td class="num">28,733</td><td class="num">81</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">gpt-oss-120b <span class="note">(RepeatedFormatError)</span></td><td class="num">0 / 32</td><td class="num">— (0)</td><td class="num">6s</td><td class="num">5,961</td><td class="num">104</td><td class="num">2</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">claude-opus-4.8 (reasoning=high)</td><td class="num">1 / 32</td><td class="num">— (0)</td><td class="num">8m 52s</td><td class="num">1,293,848</td><td class="num">20,052</td><td class="num">55</td><td><span class="status-chip fail">No</span></td></tr>
       </table>
     </div>
-
     <div class="pr-group">
       <div class="pr-head">
         <span class="title">#3460 — Avoid segfaults in LazyCorpusLoader._unload()</span>
         <span class="num">bug_fix</span>
       </div>
       <table>
-        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Resolved</th></tr>
-        <tr><td class="model">laguna</td><td class="num">0 / 1</td><td class="num">5 / 5</td><td><span class="status-chip fail">No</span></td></tr>
-        <tr><td class="model">gemini-3.5-flash</td><td class="num">0 / 1</td><td class="num">5 / 5</td><td><span class="status-chip fail">No</span></td></tr>
-        <tr><td class="model">kimi-k2.7-code</td><td class="num">0 / 1</td><td class="num">5 / 5</td><td><span class="status-chip fail">No</span></td></tr>
-        <tr><td class="model">gpt-oss-120b</td><td class="num" colspan="3"><span class="note">running…</span></td></tr>
+        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Time</th><th>Input tok</th><th>Output tok</th><th>Steps</th><th>Resolved</th></tr>
+        <tr><td class="model">laguna</td><td class="num">0 / 1</td><td class="num">5 / 5</td><td class="num">4m 41s</td><td class="num">1,906,517</td><td class="num">26,662</td><td class="num">68</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">gemini-3.5-flash</td><td class="num">0 / 1</td><td class="num">5 / 5</td><td class="num">4m 00s</td><td class="num">725,278</td><td class="num">16,917</td><td class="num">55</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">kimi-k2.7-code</td><td class="num">0 / 1</td><td class="num">5 / 5</td><td class="num">7m 17s</td><td class="num">844,535</td><td class="num">23,563</td><td class="num">45</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">gpt-oss-120b</td><td class="num">0 / 1</td><td class="num">5 / 5</td><td class="num">10m 23s</td><td class="num">1,238,303</td><td class="num">33,845</td><td class="num">72</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">claude-opus-4.8 (reasoning=high)</td><td class="num">0 / 1</td><td class="num">5 / 5</td><td class="num">9m 19s</td><td class="num">237,846</td><td class="num">31,409</td><td class="num">28</td><td><span class="status-chip fail">No</span></td></tr>
       </table>
     </div>
-
-    <p class="note">Remaining: #3451, #3411, #3371 not yet started.</p>
+    <div class="pr-group">
+      <div class="pr-head">
+        <span class="title">#3411 — Update download checksums to use SHA256 in built index</span>
+        <span class="num">security_fix</span>
+      </div>
+      <table>
+        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Time</th><th>Input tok</th><th>Output tok</th><th>Steps</th><th>Resolved</th></tr>
+        <tr><td class="model">laguna</td><td class="num">0 / 1</td><td class="num">0 / 3</td><td class="num">1m 46s</td><td class="num">1,286,337</td><td class="num">8,612</td><td class="num">71</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">gemini-3.5-flash</td><td class="num">0 / 1</td><td class="num">0 / 3</td><td class="num">1m 14s</td><td class="num">304,188</td><td class="num">4,502</td><td class="num">36</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">kimi-k2.7-code</td><td class="num">0 / 1</td><td class="num">0 / 3</td><td class="num">1m 21s</td><td class="num">121,685</td><td class="num">5,844</td><td class="num">16</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">gpt-oss-120b <span class="note">(TimedOut)</span></td><td class="num">0 / 1</td><td class="num">0 / 3</td><td class="num">6m 02s</td><td class="num">1,488,705</td><td class="num">31,311</td><td class="num">102</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">claude-opus-4.8 (reasoning=high)</td><td class="num">0 / 1</td><td class="num">0 / 3</td><td class="num">1m 20s</td><td class="num">80,771</td><td class="num">3,240</td><td class="num">14</td><td><span class="status-chip fail">No</span></td></tr>
+      </table>
+    </div>
+    <div class="pr-group">
+      <div class="pr-head">
+        <span class="title">#3371 — Add support for mixed rules conversion into Chomsky Normal Form</span>
+        <span class="num">feature_activation</span>
+      </div>
+      <table>
+        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Time</th><th>Input tok</th><th>Output tok</th><th>Steps</th><th>Resolved</th></tr>
+        <tr><td class="model">laguna <span class="note">(TimedOut)</span></td><td class="num">0 / 1</td><td class="num">— (0)</td><td class="num">10m 25s</td><td class="num">7,863,382</td><td class="num">20,433</td><td class="num">191</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">gemini-3.5-flash <span class="note">(TimedOut)</span></td><td class="num">0 / 1</td><td class="num">— (0)</td><td class="num">11m 05s</td><td class="num">4,381,631</td><td class="num">36,264</td><td class="num">138</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">kimi-k2.7-code</td><td class="num">1 / 1</td><td class="num">— (0)</td><td class="num">5m 12s</td><td class="num">358,692</td><td class="num">10,587</td><td class="num">28</td><td><span class="status-chip pass">Yes</span></td></tr><tr><td class="model">gpt-oss-120b <span class="note">(RepeatedFormatError)</span></td><td class="num">0 / 1</td><td class="num">— (0)</td><td class="num">7m 11s</td><td class="num">1,183,870</td><td class="num">22,274</td><td class="num">77</td><td><span class="status-chip fail">No</span></td></tr><tr><td class="model">claude-opus-4.8 (reasoning=high)</td><td class="num">1 / 1</td><td class="num">— (0)</td><td class="num">2m 51s</td><td class="num">95,350</td><td class="num">3,103</td><td class="num">15</td><td><span class="status-chip pass">Yes</span></td></tr>
+      </table>
+    </div>
   </section>
 
   <section>
-    <h2>What's visible so far</h2>
-    <p class="h2-note" style="max-width:70ch">
-      <code>gpt-oss-120b</code> has failed to submit a patch on every single PR it's completed (6/6), always via <code>RepeatedFormatError</code> — a protocol/tool-call-format incompatibility with mini-swe-agent, not bad luck. The other three models track each other closely (3/7 resolved each) and agree on <em>which</em> PRs they solve and which they don't — same 3 resolved (#3644, #3641, #3544), same 4 not (#3672, #3487, #3474, #3460). On PR #3672, all three independently converged on the same O(n)-conversion algorithmic fix while missing the same two input-validation edge cases — a verified finding (compared actual patch text, not just scores), not a broken model-selection bug. PR #3474 (32 FAIL_TO_PASS tests, by far the largest task) is the one case where every model made real but very partial progress (1/32); PR #3460 and #3487 are cases where all three models got the surrounding regression tests right (PASS_TO_PASS) but missed the actual fix entirely.
+    <h2>What the numbers show</h2>
+    <p class="h2-note" style="max-width:74ch">
+      <code>claude-opus-4.8</code> (reasoning=high) and <code>kimi-k2.7-code</code> lead at 4/9 resolved; <code>laguna</code> and <code>gemini-3.5-flash</code> follow at 3/9; <code>gpt-oss-120b</code> failed to submit a usable patch on any of the 9 (always <code>RepeatedFormatError</code>, a protocol incompatibility, not model weakness). Token and step counts vary enormously by PR difficulty, not just model — see #3371, where a timed-out run burned over 4M cumulative input tokens and 138 steps looping without ever submitting, versus a 15-step, ~95K-token clean resolve on the same PR from another model.
     </p>
   </section>
 
   <footer>
-    Snapshot generated mid-run · graded via nltk-eval:pr-3564 image · agent environment: shallow single-commit, network-isolated per PR
+    Graded via nltk-eval:pr-3564 image · agent environment: shallow single-commit, network-isolated per PR · reasoning effort verified via extra_body passthrough for claude-opus-4.8
   </footer>
 
 </div>

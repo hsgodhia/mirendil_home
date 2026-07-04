@@ -1,0 +1,35 @@
+{
+  "pr_number": 3451,
+  "log": [
+    "touched test files: ['nltk/test/unit/test_corpus_util.py']",
+    "candidates: 3 tests collected with test_patch + patch applied (post-fix)",
+    "phase1 (pre-fix): 0 fail (-> FAIL_TO_PASS), 3 already pass (-> PASS_TO_PASS)"
+  ],
+  "status": "no_discriminating_tests",
+  "updated_task": {
+    "repo": "nltk/nltk",
+    "pr_number": 3451,
+    "pr_title": "add tests for _make_bound_method",
+    "pr_url": "https://github.com/nltk/nltk/pull/3451",
+    "intent": {
+      "category": "test_coverage",
+      "other_label": "",
+      "rationale": "PR explicitly adds a new test file with test coverage for _make_bound_method to ensure compatibility across Python versions before addressing py3.13 specific changes.",
+      "confidence": 0.98
+    },
+    "base_commit": "6947f5c9d709da9cf3db2e09ac1bffa6f15bd1bc",
+    "merge_commit": "ff468af1a3e2f388e08f47a5224a8048838ecdf3",
+    "diff_end_commit": "ff468af1a3e2f388e08f47a5224a8048838ecdf3",
+    "patch": null,
+    "test_patch": "test_patch.diff",
+    "FAIL_TO_PASS": [],
+    "PASS_TO_PASS": [
+      "unit/test_corpus_util.py::TestMakeBoundMethod::test_bound_method_has_correct_self",
+      "unit/test_corpus_util.py::TestMakeBoundMethod::test_bound_method_with_arguments",
+      "unit/test_corpus_util.py::TestMakeBoundMethod::test_creates_bound_method"
+    ],
+    "_status": "no_discriminating_tests"
+  },
+  "note": "every candidate test already passes on the unfixed source -- test_patch doesn't actually exercise the bug this PR fixes",
+  "elapsed_seconds": 7.4
+}

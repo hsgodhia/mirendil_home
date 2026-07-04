@@ -1,0 +1,24 @@
+{
+  "pr_number": 3411,
+  "model_key": "kimi-k2.7-code",
+  "model_name": "openrouter/moonshotai/kimi-k2.7-code",
+  "exit_status": "Submitted",
+  "elapsed_seconds": 81.0,
+  "submission_chars": 2754,
+  "resolved": false,
+  "fail_to_pass_total": 1,
+  "fail_to_pass_passed": 0,
+  "pass_to_pass_total": 3,
+  "pass_to_pass_passed": 0,
+  "detail": {
+    "resolved": false,
+    "FAIL_TO_PASS": {
+      "unit/test_downloader.py::test_build_index": "failed"
+    },
+    "PASS_TO_PASS": {
+      "unit/test_downloader.py::test_downloader_redownload": "failed",
+      "unit/test_downloader.py::test_downloader_using_existing_parent_download_dir": "failed",
+      "unit/test_downloader.py::test_downloader_using_non_existing_parent_download_dir": "failed"
+    }
+  }
+}

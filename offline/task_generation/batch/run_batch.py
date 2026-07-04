@@ -116,7 +116,7 @@ def ensure_agent_image(number, base_commit):
 # Run one (pr, model) through mini-swe-agent
 # ---------------------------------------------------------------------------
 
-def run_agent(number, model_key, model_name, image_tag, problem_statement, container_holder):
+def run_agent(number, model_key, model_name, image_tag, problem_statement, container_holder, model_kwargs=None):
     from minisweagent.agents import get_agent
     from minisweagent.config import builtin_config_dir, get_config_from_spec
     from minisweagent.models import get_model
@@ -143,7 +143,7 @@ def run_agent(number, model_key, model_name, image_tag, problem_statement, conta
                 "PIP_PROGRESS_BAR": "off", "TQDM_DISABLE": "1", "BASH_ENV": "/dev/null",
             },
         },
-        "model": {"model_name": model_name},
+        "model": {"model_name": model_name, "model_kwargs": model_kwargs or {}},
         "agent": {"mode": "yolo", "cost_limit": 3.0},
     }
     config = recursive_merge(default_config, override)
@@ -175,7 +175,7 @@ def run_agent(number, model_key, model_name, image_tag, problem_statement, conta
     return info
 
 
-def run_agent_with_timeout(number, model_key, model_name, image_tag, problem_statement, timeout_s):
+def run_agent_with_timeout(number, model_key, model_name, image_tag, problem_statement, timeout_s, model_kwargs=None):
     """Run run_agent() on a daemon thread and enforce a hard wall-clock
     timeout. agent.run() is a blocking in-process call with no built-in
     cancellation, so the only reliable way to bound it is: run it off-thread,
@@ -191,7 +191,7 @@ def run_agent_with_timeout(number, model_key, model_name, image_tag, problem_sta
 
     def worker():
         try:
-            info = run_agent(number, model_key, model_name, image_tag, problem_statement, container_holder)
+            info = run_agent(number, model_key, model_name, image_tag, problem_statement, container_holder, model_kwargs)
             result_q.put(("ok", info))
         except Exception as e:
             result_q.put(("error", e))

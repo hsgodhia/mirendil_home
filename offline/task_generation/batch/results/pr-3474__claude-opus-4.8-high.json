@@ -1,0 +1,58 @@
+{
+  "pr_number": 3474,
+  "model_key": "claude-opus-4.8-high",
+  "model_name": "openrouter/anthropic/claude-opus-4.8",
+  "model_kwargs": {
+    "extra_body": {
+      "reasoning": {
+        "effort": "high"
+      }
+    }
+  },
+  "exit_status": "Submitted",
+  "elapsed_seconds": 532.2,
+  "submission_chars": 3497,
+  "resolved": false,
+  "fail_to_pass_total": 32,
+  "fail_to_pass_passed": 1,
+  "pass_to_pass_total": 0,
+  "pass_to_pass_passed": 0,
+  "detail": {
+    "resolved": false,
+    "FAIL_TO_PASS": {
+      "unit/test_json2csv_corpus.py::test_file_is_wrong": "MISSING",
+      "unit/test_json2csv_corpus.py::test_retweet_original_tweet": "MISSING",
+      "unit/test_json2csv_corpus.py::test_textoutput": "MISSING",
+      "unit/test_json2csv_corpus.py::test_tweet_hashtag": "MISSING",
+      "unit/test_json2csv_corpus.py::test_tweet_media": "MISSING",
+      "unit/test_json2csv_corpus.py::test_tweet_metadata": "MISSING",
+      "unit/test_json2csv_corpus.py::test_tweet_place": "MISSING",
+      "unit/test_json2csv_corpus.py::test_tweet_place_boundingbox": "MISSING",
+      "unit/test_json2csv_corpus.py::test_tweet_url": "MISSING",
+      "unit/test_json2csv_corpus.py::test_tweet_usermention": "MISSING",
+      "unit/test_json2csv_corpus.py::test_user_metadata": "MISSING",
+      "unit/test_json2csv_corpus.py::test_userurl": "MISSING",
+      "unit/test_open_datafile.py::test_open_datafile_binary_mode_from_zip": "MISSING",
+      "unit/test_open_datafile.py::test_open_datafile_directory_and_filename_from_zip": "MISSING",
+      "unit/test_open_datafile.py::test_open_datafile_file_pointer_from_zip": "MISSING",
+      "unit/test_pl196x.py::TestCorpusViews::test_corpus_reader": "passed",
+      "unit/translate/test_bleu.py::TestBLEU::test_brevity_penalty": "MISSING",
+      "unit/translate/test_bleu.py::TestBLEU::test_full_matches": "MISSING",
+      "unit/translate/test_bleu.py::TestBLEU::test_modified_precision": "MISSING",
+      "unit/translate/test_bleu.py::TestBLEU::test_partial_matches_hypothesis_longer_than_reference": "MISSING",
+      "unit/translate/test_bleu.py::TestBLEU::test_zero_matches": "MISSING",
+      "unit/translate/test_bleu.py::TestBLEUFringeCases::test_case_where_n_is_bigger_than_hypothesis_length": "MISSING",
+      "unit/translate/test_bleu.py::TestBLEUFringeCases::test_empty_hypothesis": "MISSING",
+      "unit/translate/test_bleu.py::TestBLEUFringeCases::test_empty_references": "MISSING",
+      "unit/translate/test_bleu.py::TestBLEUFringeCases::test_empty_references_and_hypothesis": "MISSING",
+      "unit/translate/test_bleu.py::TestBLEUFringeCases::test_length_one_hypothesis": "MISSING",
+      "unit/translate/test_bleu.py::TestBLEUFringeCases::test_numpy_weights": "MISSING",
+      "unit/translate/test_bleu.py::TestBLEUFringeCases::test_reference_or_hypothesis_shorter_than_fourgrams": "MISSING",
+      "unit/translate/test_bleu.py::TestBLEUWithBadSentence::test_corpus_bleu_with_bad_sentence": "MISSING",
+      "unit/translate/test_bleu.py::TestBLEUWithMultipleWeights::test_corpus_bleu_with_multiple_weights": "MISSING",
+      "unit/translate/test_bleu.py::TestBLEUvsMteval13a::test_corpus_bleu": "MISSING",
+      "unit/translate/test_nist.py::TestNIST::test_sentence_nist": "MISSING"
+    },
+    "PASS_TO_PASS": {}
+  }
+}

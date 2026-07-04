@@ -1,0 +1,27 @@
+{
+  "pr_number": 3371,
+  "model_key": "claude-opus-4.8-high",
+  "model_name": "openrouter/anthropic/claude-opus-4.8",
+  "model_kwargs": {
+    "extra_body": {
+      "reasoning": {
+        "effort": "high"
+      }
+    }
+  },
+  "exit_status": "Submitted",
+  "elapsed_seconds": 171.7,
+  "submission_chars": 2819,
+  "resolved": true,
+  "fail_to_pass_total": 1,
+  "fail_to_pass_passed": 1,
+  "pass_to_pass_total": 0,
+  "pass_to_pass_passed": 0,
+  "detail": {
+    "resolved": true,
+    "FAIL_TO_PASS": {
+      "grammar.doctest::grammar.doctest": "passed"
+    },
+    "PASS_TO_PASS": {}
+  }
+}

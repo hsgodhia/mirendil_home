@@ -1,0 +1,38 @@
+{
+  "pr_number": 3371,
+  "log": [
+    "touched test files: ['nltk/test/grammar.doctest']",
+    "candidates: 1 tests collected with test_patch + patch applied (post-fix)",
+    "phase1 (pre-fix): 1 fail (-> FAIL_TO_PASS), 0 already pass (-> PASS_TO_PASS)",
+    "phase2 (post-fix): 0 still not passing (dropped)"
+  ],
+  "status": "verified",
+  "updated_task": {
+    "repo": "nltk/nltk",
+    "pr_number": 3371,
+    "pr_title": "Add support for mixed rules conversion into Chomsky Normal Form",
+    "pr_url": "https://github.com/nltk/nltk/pull/3371",
+    "intent": {
+      "category": "feature_addition",
+      "other_label": "",
+      "rationale": "The PR adds new functionality to handle mixed rules conversion into Chomsky Normal Form by introducing a new `remove_mixed_rules` method and extending the existing `chomsky_normal_form()` method.",
+      "confidence": 0.98
+    },
+    "base_commit": "30ee1ad5e23dda2cdfc05e027f24b398fa44cfac",
+    "merge_commit": "007cf7541cb85a67860b38d0f86403c03e173624",
+    "diff_end_commit": "007cf7541cb85a67860b38d0f86403c03e173624",
+    "patch": "patch.diff",
+    "test_patch": "test_patch.diff",
+    "FAIL_TO_PASS": [
+      "grammar.doctest::grammar.doctest"
+    ],
+    "PASS_TO_PASS": [],
+    "_status": "verified"
+  },
+  "FAIL_TO_PASS": [
+    "grammar.doctest::grammar.doctest"
+  ],
+  "PASS_TO_PASS": [],
+  "dropped_still_failing_post_fix": [],
+  "elapsed_seconds": 5.8
+}

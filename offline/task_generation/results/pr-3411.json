@@ -1,0 +1,46 @@
+{
+  "pr_number": 3411,
+  "log": [
+    "touched test files: ['nltk/test/unit/test_downloader.py']",
+    "candidates: 4 tests collected with test_patch + patch applied (post-fix)",
+    "phase1 (pre-fix): 1 fail (-> FAIL_TO_PASS), 3 already pass (-> PASS_TO_PASS)",
+    "phase2 (post-fix): 0 still not passing (dropped)"
+  ],
+  "status": "verified",
+  "updated_task": {
+    "repo": "nltk/nltk",
+    "pr_number": 3411,
+    "pr_title": "Update download checksums to use SHA256 in built index",
+    "pr_url": "https://github.com/nltk/nltk/pull/3411",
+    "intent": {
+      "category": "security_fix",
+      "other_label": "",
+      "rationale": "The PR upgrades checksum verification from an older algorithm to SHA256, which is a stronger cryptographic hash used for securing download integrity verification.",
+      "confidence": 0.85
+    },
+    "base_commit": "25fe6242aa58fff57bef729c1eb4b2808e242c05",
+    "merge_commit": "aff0ecb71db1944182e9ee3a595084325933d0e1",
+    "diff_end_commit": "aff0ecb71db1944182e9ee3a595084325933d0e1",
+    "patch": "patch.diff",
+    "test_patch": "test_patch.diff",
+    "FAIL_TO_PASS": [
+      "unit/test_downloader.py::test_build_index"
+    ],
+    "PASS_TO_PASS": [
+      "unit/test_downloader.py::test_downloader_redownload",
+      "unit/test_downloader.py::test_downloader_using_existing_parent_download_dir",
+      "unit/test_downloader.py::test_downloader_using_non_existing_parent_download_dir"
+    ],
+    "_status": "verified"
+  },
+  "FAIL_TO_PASS": [
+    "unit/test_downloader.py::test_build_index"
+  ],
+  "PASS_TO_PASS": [
+    "unit/test_downloader.py::test_downloader_redownload",
+    "unit/test_downloader.py::test_downloader_using_existing_parent_download_dir",
+    "unit/test_downloader.py::test_downloader_using_non_existing_parent_download_dir"
+  ],
+  "dropped_still_failing_post_fix": [],
+  "elapsed_seconds": 11.6
+}
