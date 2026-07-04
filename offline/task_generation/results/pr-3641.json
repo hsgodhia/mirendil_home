@@ -1,0 +1,40 @@
+{
+  "pr_number": 3641,
+  "log": [
+    "touched test files: ['nltk/test/unit/test_ccg_lexicon_security.py']",
+    "candidates: 2 tests collected with test_patch + patch applied (post-fix)",
+    "phase1 (pre-fix): 2 fail (-> FAIL_TO_PASS), 0 already pass (-> PASS_TO_PASS)",
+    "phase2 (post-fix): 0 still not passing (dropped)"
+  ],
+  "status": "verified",
+  "updated_task": {
+    "repo": "nltk/nltk",
+    "pr_number": 3641,
+    "pr_title": "fix(security): stop quadratic ReDoS in CCG lexicon parsing (CWE-1333)",
+    "pr_url": "https://github.com/nltk/nltk/pull/3641",
+    "intent": {
+      "category": "security_fix",
+      "other_label": "",
+      "rationale": "This PR fixes a ReDoS (Regular Expression Denial of Service) vulnerability (CWE-1333) in CCG lexicon parsing by eliminating quadratic regex backtracking, with additional security-focused tests.",
+      "confidence": 1.0
+    },
+    "base_commit": "00335c0f81c8ac20b58ea00dba116fcb1fc079bc",
+    "merge_commit": "f4f4bb5cc80a5d8ba77ab3b5a2e3beb79df9484c",
+    "diff_end_commit": "f4f4bb5cc80a5d8ba77ab3b5a2e3beb79df9484c",
+    "patch": "patch.diff",
+    "test_patch": "test_patch.diff",
+    "FAIL_TO_PASS": [
+      "unit/test_ccg_lexicon_security.py::test_fromstring_does_not_hang",
+      "unit/test_ccg_lexicon_security.py::test_lex_re_does_not_hang"
+    ],
+    "PASS_TO_PASS": [],
+    "_status": "verified"
+  },
+  "FAIL_TO_PASS": [
+    "unit/test_ccg_lexicon_security.py::test_fromstring_does_not_hang",
+    "unit/test_ccg_lexicon_security.py::test_lex_re_does_not_hang"
+  ],
+  "PASS_TO_PASS": [],
+  "dropped_still_failing_post_fix": [],
+  "elapsed_seconds": 39.1
+}

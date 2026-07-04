@@ -38,3 +38,65 @@
 [2026-07-03 20:26:29] pr-3644/gemini-3.5-flash: submitted 2573 chars in 122s, grading...
 [2026-07-03 20:26:33] pr-3644/gemini-3.5-flash: DONE -- resolved=True FAIL_TO_PASS 4/4 PASS_TO_PASS 52/52
 [2026-07-03 20:26:33] pr-3644/kimi-k2.7-code: running mini-swe-agent (openrouter/moonshotai/kimi-k2.7-code)
+[2026-07-03 20:29:06] pr-3644/kimi-k2.7-code: submitted 3464 chars in 153s, grading...
+[2026-07-03 20:29:10] pr-3644/kimi-k2.7-code: DONE -- resolved=True FAIL_TO_PASS 4/4 PASS_TO_PASS 52/52
+[2026-07-03 20:29:10] pr-3644/gpt-oss-120b: running mini-swe-agent (openrouter/openai/gpt-oss-120b)
+[2026-07-03 20:35:27] pr-3644/gpt-oss-120b: no submission (exit_status=RepeatedFormatError), skipping grading
+[2026-07-03 20:35:27] pr-3644/gpt-oss-120b: DONE -- resolved=False FAIL_TO_PASS 0/4 PASS_TO_PASS 0/52
+[2026-07-03 20:35:27] pr-3641: generating task config
+[2026-07-03 20:35:28] pr-3641: verifying FAIL_TO_PASS/PASS_TO_PASS in Docker
+[2026-07-03 20:36:08] pr-3641: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=2, PASS_TO_PASS=0
+[2026-07-03 20:36:08] pr-3641: building agent-safe image (nltk-agent-safe:pr-3641) at commit 00335c0f81
+[2026-07-03 20:36:17] pr-3641/laguna: running mini-swe-agent (openrouter/poolside/laguna-xs-2.1)
+[2026-07-03 20:38:33] pr-3641/laguna: submitted 668 chars in 136s, grading...
+[2026-07-03 20:38:39] pr-3641/laguna: DONE -- resolved=True FAIL_TO_PASS 2/2 PASS_TO_PASS 0/0
+[2026-07-03 20:38:39] pr-3641/gemini-3.5-flash: running mini-swe-agent (openrouter/google/gemini-3.5-flash)
+[2026-07-03 20:39:11] pr-3641/gemini-3.5-flash: submitted 667 chars in 31s, grading...
+[2026-07-03 20:39:17] pr-3641/gemini-3.5-flash: DONE -- resolved=True FAIL_TO_PASS 2/2 PASS_TO_PASS 0/0
+[2026-07-03 20:39:17] pr-3641/kimi-k2.7-code: running mini-swe-agent (openrouter/moonshotai/kimi-k2.7-code)
+[2026-07-03 20:40:37] pr-3641/kimi-k2.7-code: submitted 667 chars in 80s, grading...
+[2026-07-03 20:40:43] pr-3641/kimi-k2.7-code: DONE -- resolved=True FAIL_TO_PASS 2/2 PASS_TO_PASS 0/0
+[2026-07-03 20:40:43] pr-3641/gpt-oss-120b: running mini-swe-agent (openrouter/openai/gpt-oss-120b)
+[2026-07-03 20:40:59] pr-3641/gpt-oss-120b: no submission (exit_status=RepeatedFormatError), skipping grading
+[2026-07-03 20:40:59] pr-3641/gpt-oss-120b: DONE -- resolved=False FAIL_TO_PASS 0/2 PASS_TO_PASS 0/0
+[2026-07-03 20:40:59] pr-3544: generating task config
+[2026-07-03 20:41:00] pr-3544: verifying FAIL_TO_PASS/PASS_TO_PASS in Docker
+[2026-07-03 20:41:07] pr-3544: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=1, PASS_TO_PASS=1
+[2026-07-03 20:41:07] pr-3544: building agent-safe image (nltk-agent-safe:pr-3544) at commit caeadbe230
+[2026-07-03 20:41:13] pr-3544/laguna: running mini-swe-agent (openrouter/poolside/laguna-xs-2.1)
+[2026-07-03 20:43:10] pr-3544/laguna: submitted 1437 chars in 117s, grading...
+[2026-07-03 20:43:14] pr-3544/laguna: DONE -- resolved=True FAIL_TO_PASS 1/1 PASS_TO_PASS 1/1
+[2026-07-03 20:43:14] pr-3544/gemini-3.5-flash: running mini-swe-agent (openrouter/google/gemini-3.5-flash)
+[2026-07-03 20:44:51] pr-3544/gemini-3.5-flash: submitted 1478 chars in 98s, grading...
+[2026-07-03 20:44:57] pr-3544/gemini-3.5-flash: DONE -- resolved=True FAIL_TO_PASS 1/1 PASS_TO_PASS 1/1
+[2026-07-03 20:44:57] pr-3544/kimi-k2.7-code: running mini-swe-agent (openrouter/moonshotai/kimi-k2.7-code)
+[2026-07-03 20:46:38] === batch start: 10 PRs x 4 models = 40 combos, 15 already done ===
+[2026-07-03 20:46:38] pr-3672: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=4, PASS_TO_PASS=14
+[2026-07-03 20:46:38] pr-3672/laguna: already done, skipping
+[2026-07-03 20:46:38] pr-3672/gemini-3.5-flash: already done, skipping
+[2026-07-03 20:46:38] pr-3672/kimi-k2.7-code: already done, skipping
+[2026-07-03 20:46:38] pr-3672/gpt-oss-120b: already done, skipping
+[2026-07-03 20:46:38] pr-3644: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=4, PASS_TO_PASS=52
+[2026-07-03 20:46:39] pr-3644/laguna: already done, skipping
+[2026-07-03 20:46:39] pr-3644/gemini-3.5-flash: already done, skipping
+[2026-07-03 20:46:39] pr-3644/kimi-k2.7-code: already done, skipping
+[2026-07-03 20:46:39] pr-3644/gpt-oss-120b: already done, skipping
+[2026-07-03 20:46:39] pr-3641: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=2, PASS_TO_PASS=0
+[2026-07-03 20:46:39] pr-3641/laguna: already done, skipping
+[2026-07-03 20:46:39] pr-3641/gemini-3.5-flash: already done, skipping
+[2026-07-03 20:46:39] pr-3641/kimi-k2.7-code: already done, skipping
+[2026-07-03 20:46:39] pr-3641/gpt-oss-120b: already done, skipping
+[2026-07-03 20:46:39] pr-3544: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=1, PASS_TO_PASS=1
+[2026-07-03 20:46:39] pr-3544/laguna: already done, skipping
+[2026-07-03 20:46:39] pr-3544/gemini-3.5-flash: already done, skipping
+[2026-07-03 20:46:39] pr-3544/kimi-k2.7-code: running mini-swe-agent (openrouter/moonshotai/kimi-k2.7-code)
+[2026-07-03 20:49:04] pr-3544/kimi-k2.7-code: submitted 1071 chars in 145s, grading...
+[2026-07-03 20:49:07] pr-3544/kimi-k2.7-code: DONE -- resolved=True FAIL_TO_PASS 1/1 PASS_TO_PASS 1/1
+[2026-07-03 20:49:07] pr-3544/gpt-oss-120b: running mini-swe-agent (openrouter/openai/gpt-oss-120b)
+[2026-07-03 20:49:44] pr-3544/gpt-oss-120b: no submission (exit_status=RepeatedFormatError), skipping grading
+[2026-07-03 20:49:44] pr-3544/gpt-oss-120b: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 0/1
+[2026-07-03 20:49:44] pr-3487: problem statement source = issue #3486, FAIL_TO_PASS=1, PASS_TO_PASS=0
+[2026-07-03 20:49:44] pr-3487/laguna: running mini-swe-agent (openrouter/poolside/laguna-xs-2.1)
+[2026-07-03 20:51:13] pr-3487/laguna: submitted 1583 chars in 88s, grading...
+[2026-07-03 20:51:15] pr-3487/laguna: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 0/0
+[2026-07-03 20:51:15] pr-3487/gemini-3.5-flash: running mini-swe-agent (openrouter/google/gemini-3.5-flash)

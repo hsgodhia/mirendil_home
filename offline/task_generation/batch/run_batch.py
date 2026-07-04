@@ -156,6 +156,16 @@ def run_agent(number, model_key, model_name, image_tag, problem_statement):
             agent.save(traj_path)
         except Exception as e:
             log(f"pr-{number}/{model_key}: trajectory save failed: {e}")
+        # DockerEnvironment.cleanup() is meant to fire via __del__ when this
+        # object is garbage-collected, but agent.run() signals completion by
+        # *raising* Submitted -- the resulting traceback holds a reference to
+        # this frame (and everything in it, including env) until it's fully
+        # unwound, which delays/skips refcount-based collection in practice.
+        # Stop the container explicitly instead of hoping GC gets to it.
+        try:
+            env.cleanup()
+        except Exception as e:
+            log(f"pr-{number}/{model_key}: container cleanup failed: {e}")
     return info
 
 

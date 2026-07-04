@@ -1,0 +1,21 @@
+{
+  "pr_number": 3641,
+  "model_key": "laguna",
+  "model_name": "openrouter/poolside/laguna-xs-2.1",
+  "exit_status": "Submitted",
+  "elapsed_seconds": 136.5,
+  "submission_chars": 668,
+  "resolved": true,
+  "fail_to_pass_total": 2,
+  "fail_to_pass_passed": 2,
+  "pass_to_pass_total": 0,
+  "pass_to_pass_passed": 0,
+  "detail": {
+    "resolved": true,
+    "FAIL_TO_PASS": {
+      "unit/test_ccg_lexicon_security.py::test_fromstring_does_not_hang": "passed",
+      "unit/test_ccg_lexicon_security.py::test_lex_re_does_not_hang": "passed"
+    },
+    "PASS_TO_PASS": {}
+  }
+}

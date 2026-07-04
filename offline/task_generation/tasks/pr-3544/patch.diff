@@ -1,0 +1,71 @@
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index e93e2669..794e24ec 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -49,8 +49,8 @@ jobs:
+         with:
+           python-version: "3.14"
+ 
+-      - name: Install regex
+-        run: pip install regex
++      - name: Install core dependencies
++        run: pip install regex defusedxml
+ 
+       - name: Set NLTK_DATA environment variable
+         shell: bash
+diff --git a/AUTHORS.md b/AUTHORS.md
+index c38fe9ec..5b0c51fd 100644
+--- a/AUTHORS.md
++++ b/AUTHORS.md
+@@ -310,6 +310,7 @@
+ - Peter de Blanc <https://github.com/pdeblanc>
+ - Jose Cols <https://github.com/josecols>
+ - Christopher Smith <https://github.com/smithct2>
++- scruge1 <https://github.com/scruge1>
+ - Ryan Mannion <https://github.com/ryanamannion>
+ - Peter Pollak <https://github.com/Syzygy2048/>
+ 
+diff --git a/nltk/downloader.py b/nltk/downloader.py
+index bae8caba..896f765b 100644
+--- a/nltk/downloader.py
++++ b/nltk/downloader.py
+@@ -173,6 +173,8 @@ from hashlib import md5, sha256
+ from urllib.error import HTTPError, URLError
+ from xml.etree import ElementTree
+ 
++from defusedxml.ElementTree import parse as safe_parse
++
+ import nltk
+ from nltk.pathsec import ZipFile, urlopen
+ 
+@@ -1055,7 +1057,7 @@ class Downloader:
+ 
+         # Download the index file.
+         self._index = nltk.internals.ElementWrapper(
+-            ElementTree.parse(urlopen(self._url)).getroot()
++            safe_parse(urlopen(self._url)).getroot()
+         )
+         self._index_timestamp = time.time()
+ 
+diff --git a/requirements-ci.txt b/requirements-ci.txt
+index f45876ef..80a3ac22 100644
+--- a/requirements-ci.txt
++++ b/requirements-ci.txt
+@@ -1,4 +1,5 @@
+ click
++defusedxml
+ gensim>=4.0.0 ; python_version < '3.14'
+ markdown-it-py
+ matplotlib
+diff --git a/setup.py b/setup.py
+index 3ea252fb..f7ba9483 100644
+--- a/setup.py
++++ b/setup.py
+@@ -113,6 +113,7 @@ natural language processing.  NLTK requires Python 3.10, 3.11, 3.12, 3.13, or 3.
+     package_data={"nltk": ["test/*.doctest", "VERSION"]},
+     python_requires=">=3.10",
+     install_requires=[
++        "defusedxml",
+         "click",
+         "joblib",
+         "regex>=2021.8.3",

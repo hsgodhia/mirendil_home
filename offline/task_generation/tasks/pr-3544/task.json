@@ -1,0 +1,24 @@
+{
+  "repo": "nltk/nltk",
+  "pr_number": 3544,
+  "pr_title": "fix(security): block XML entity expansion (XXE) in downloader",
+  "pr_url": "https://github.com/nltk/nltk/pull/3544",
+  "intent": {
+    "category": "security_fix",
+    "other_label": "",
+    "rationale": "This PR addresses a critical XXE (Billion Laughs) vulnerability by replacing the standard XML parser with defusedxml.ElementTree.parse to prevent XML entity expansion attacks, including defensive tests to verify the fix works.",
+    "confidence": 0.99
+  },
+  "base_commit": "caeadbe230cb4b77dbeedd5450a50e656ff86524",
+  "merge_commit": "249c6df829e3463906558118f1a695ee48d2d9a6",
+  "diff_end_commit": "249c6df829e3463906558118f1a695ee48d2d9a6",
+  "patch": "patch.diff",
+  "test_patch": "test_patch.diff",
+  "FAIL_TO_PASS": [
+    "unit/test_downloader_xxe.py::TestDownloaderXXE::test_billion_laughs_blocked"
+  ],
+  "PASS_TO_PASS": [
+    "unit/test_downloader_xxe.py::TestDownloaderXXE::test_valid_xml_parses"
+  ],
+  "_status": "verified"
+}
