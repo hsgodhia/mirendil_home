@@ -48,6 +48,72 @@ def fmt_time(s):
     return f"{m}m {sec:02d}s"
 
 
+def fmt_compact(n):
+    if n is None:
+        return "—"
+    if n >= 1_000_000:
+        return f"{n / 1_000_000:.2f}M"
+    if n >= 1_000:
+        return f"{n / 1_000:.1f}K"
+    return f"{n:.0f}"
+
+
+def fmt_pct(x):
+    if x is None:
+        return "—"
+    return f"{x * 100:.0f}%"
+
+
+# Series colors: fixed slot per model, consistent across every small-multiple
+# chart in the "averages" section (dataviz skill: categorical, fixed order).
+SERIES_CLASS = {m: f"s{i + 1}" for i, m in enumerate(MODEL_ORDER)}
+
+
+def compute_model_averages(rows):
+    agg = {m: {"steps": [], "in_tok": [], "out_tok": [], "time": [], "ftp_rate": [], "ptp_rate": []} for m in MODEL_ORDER}
+    for r in rows:
+        m = r["model_key"]
+        if r["steps"] is not None:
+            agg[m]["steps"].append(r["steps"])
+        if r["input_tokens"] is not None:
+            agg[m]["in_tok"].append(r["input_tokens"])
+        if r["output_tokens"] is not None:
+            agg[m]["out_tok"].append(r["output_tokens"])
+        if r["elapsed_seconds"] is not None:
+            agg[m]["time"].append(r["elapsed_seconds"])
+        if r["fail_to_pass_total"]:
+            agg[m]["ftp_rate"].append(r["fail_to_pass_passed"] / r["fail_to_pass_total"])
+        if r["pass_to_pass_total"]:
+            agg[m]["ptp_rate"].append(r["pass_to_pass_passed"] / r["pass_to_pass_total"])
+
+    def avg(lst):
+        return sum(lst) / len(lst) if lst else None
+
+    return {m: {k: avg(v) for k, v in a.items()} for m, a in agg.items()}
+
+
+def render_metric_chart(title, note, values, formatter):
+    """One small-multiple bar chart: one bar per model, same fixed series color per model."""
+    numeric = [v for v in values.values() if v is not None]
+    peak = max(numeric) if numeric else 1
+    rows_html = []
+    for m in MODEL_ORDER:
+        v = values[m]
+        pct = (v / peak * 100) if (v is not None and peak) else 0
+        rows_html.append(f'''
+      <div class="metric-row">
+        <div class="metric-label">{MODEL_LABEL[m]}</div>
+        <div class="metric-track"><div class="metric-fill {SERIES_CLASS[m]}" style="width:{pct:.1f}%"></div></div>
+        <div class="metric-value">{formatter(v)}</div>
+      </div>''')
+    return f'''
+    <div class="metric-chart">
+      <h3>{title}</h3>
+      {"".join(rows_html)}
+      <p class="metric-note">{note}</p>
+    </div>'''
+
+
 def main():
     rows = json.loads((HERE / "report_data.json").read_text(encoding="utf-8"))
     by_pr = defaultdict(dict)
@@ -130,6 +196,38 @@ def main():
     total_combos = len(rows)
     total_prs = len(pr_numbers)
 
+    # per-model averages across all tasks, one small-multiple bar chart per metric
+    avgs = compute_model_averages(rows)
+    metrics_html = "".join([
+        render_metric_chart(
+            "Steps (avg)", "Mean tool-call/action count per run, across all 9 PRs.",
+            {m: avgs[m]["steps"] for m in MODEL_ORDER}, lambda v: fmt_num(round(v)) if v is not None else "—",
+        ),
+        render_metric_chart(
+            "Time to answer (avg)", "Mean wall-clock time per run, including timed-out runs.",
+            {m: avgs[m]["time"] for m in MODEL_ORDER}, fmt_time,
+        ),
+        render_metric_chart(
+            "Input tokens (avg)", "Mean cumulative prompt tokens per run (grows with steps and context re-sent each turn).",
+            {m: avgs[m]["in_tok"] for m in MODEL_ORDER}, fmt_compact,
+        ),
+        render_metric_chart(
+            "Output tokens (avg)", "Mean cumulative completion tokens per run.",
+            {m: avgs[m]["out_tok"] for m in MODEL_ORDER}, fmt_compact,
+        ),
+        render_metric_chart(
+            "FAIL_TO_PASS rate (avg)", "Mean share of each PR's regression tests turned from failing to passing.",
+            {m: avgs[m]["ftp_rate"] for m in MODEL_ORDER}, fmt_pct,
+        ),
+        render_metric_chart(
+            "PASS_TO_PASS rate (avg)", "Mean share of pre-existing tests kept passing (5 of 9 PRs have any).",
+            {m: avgs[m]["ptp_rate"] for m in MODEL_ORDER}, fmt_pct,
+        ),
+    ])
+    model_legend_html = "".join(
+        f'<span><i class="{SERIES_CLASS[m]}"></i>{MODEL_LABEL[m]}</span>' for m in MODEL_ORDER
+    )
+
     html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -142,6 +240,8 @@ def main():
     --ink: #1c2320; --muted: #5b655e; --rule: #daddd4; --accent: #35578c;
     --pass: #2f7a4f; --pass-bg: #ebf5ee; --fail: #b3392f; --fail-bg: #fbebe9;
     --shadow: 0 1px 2px rgba(28,35,32,0.06), 0 8px 24px rgba(28,35,32,0.05);
+    --series-1: #2a78d6; --series-2: #1baf7a; --series-3: #eda100;
+    --series-4: #008300; --series-5: #4a3aa7;
   }}
   @media (prefers-color-scheme: dark) {{
     :root:not([data-theme="light"]) {{
@@ -149,6 +249,8 @@ def main():
       --ink: #e8eae6; --muted: #98a29b; --rule: #2c3236; --accent: #7ea3d6;
       --pass: #379c65; --pass-bg: #163524; --fail: #d9584a; --fail-bg: #3a201d;
       --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+      --series-1: #3987e5; --series-2: #199e70; --series-3: #c98500;
+      --series-4: #008300; --series-5: #9085e9;
     }}
   }}
   :root[data-theme="dark"] {{
@@ -156,6 +258,8 @@ def main():
     --ink: #e8eae6; --muted: #98a29b; --rule: #2c3236; --accent: #7ea3d6;
     --pass: #379c65; --pass-bg: #163524; --fail: #d9584a; --fail-bg: #3a201d;
     --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+    --series-1: #3987e5; --series-2: #199e70; --series-3: #c98500;
+    --series-4: #008300; --series-5: #9085e9;
   }}
   * {{ box-sizing: border-box; }}
   body {{
@@ -246,8 +350,36 @@ def main():
   .status-chip.pass {{ color: var(--pass); background: var(--pass-bg); }}
   .status-chip.fail {{ color: var(--fail); background: var(--fail-bg); }}
   .note {{ color: var(--muted); font-size: 11.5px; }}
+  .model-legend {{ display: flex; flex-wrap: wrap; gap: 8px 20px; margin-bottom: 20px; font-size: 13px; color: var(--muted); }}
+  .model-legend span {{ display: inline-flex; align-items: center; gap: 6px; }}
+  .model-legend i {{ width: 10px; height: 10px; border-radius: 2px; display: inline-block; }}
+  .s1 {{ background: var(--series-1); }}
+  .s2 {{ background: var(--series-2); }}
+  .s3 {{ background: var(--series-3); }}
+  .s4 {{ background: var(--series-4); }}
+  .s5 {{ background: var(--series-5); }}
+  .metrics-grid {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }}
+  .metric-chart {{
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 8px;
+    padding: 18px 20px 14px; box-shadow: var(--shadow);
+  }}
+  .metric-chart h3 {{ font-size: 13.5px; font-weight: 600; margin: 0 0 14px; }}
+  .metric-row {{ display: grid; grid-template-columns: 150px 1fr 66px; align-items: center; gap: 10px; margin-bottom: 9px; }}
+  .metric-row:last-child {{ margin-bottom: 0; }}
+  .metric-label {{
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+    font-size: 11.5px; color: var(--muted); text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }}
+  .metric-track {{ height: 15px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }}
+  .metric-fill {{ height: 100%; border-radius: 4px; }}
+  .metric-value {{
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+    font-variant-numeric: tabular-nums; font-size: 12px; color: var(--ink);
+  }}
+  .metric-note {{ color: var(--muted); font-size: 11.5px; margin: 12px 0 0; padding-top: 10px; border-top: 1px solid var(--rule); }}
   footer {{ margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--muted); }}
-  @media (max-width: 640px) {{ .bar-row {{ grid-template-columns: 90px 1fr 70px; }} h1 {{ font-size: 27px; }} }}
+  @media (max-width: 720px) {{ .metrics-grid {{ grid-template-columns: 1fr; }} }}
+  @media (max-width: 640px) {{ .bar-row {{ grid-template-columns: 90px 1fr 70px; }} .metric-row {{ grid-template-columns: 100px 1fr 60px; }} h1 {{ font-size: 27px; }} }}
 </style>
 </head>
 <body>
@@ -272,6 +404,15 @@ def main():
         <span><i class="pass"></i> Resolved</span>
         <span><i class="fail"></i> Not resolved</span>
       </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Averages per model, across all {total_prs} PRs</h2>
+    <p class="h2-note">Same model, same color, in every panel below — so a bar's identity carries across metrics. FAIL_TO_PASS/PASS_TO_PASS are averaged as a per-task rate (passed/total), not raw counts, since PRs carry very different test-suite sizes.</p>
+    <div class="model-legend">{model_legend_html}</div>
+    <div class="metrics-grid">
+      {metrics_html}
     </div>
   </section>
 

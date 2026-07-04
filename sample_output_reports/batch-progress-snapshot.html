@@ -10,6 +10,8 @@
     --ink: #1c2320; --muted: #5b655e; --rule: #daddd4; --accent: #35578c;
     --pass: #2f7a4f; --pass-bg: #ebf5ee; --fail: #b3392f; --fail-bg: #fbebe9;
     --shadow: 0 1px 2px rgba(28,35,32,0.06), 0 8px 24px rgba(28,35,32,0.05);
+    --series-1: #2a78d6; --series-2: #1baf7a; --series-3: #eda100;
+    --series-4: #008300; --series-5: #4a3aa7;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -17,6 +19,8 @@
       --ink: #e8eae6; --muted: #98a29b; --rule: #2c3236; --accent: #7ea3d6;
       --pass: #379c65; --pass-bg: #163524; --fail: #d9584a; --fail-bg: #3a201d;
       --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+      --series-1: #3987e5; --series-2: #199e70; --series-3: #c98500;
+      --series-4: #008300; --series-5: #9085e9;
     }
   }
   :root[data-theme="dark"] {
@@ -24,6 +28,8 @@
     --ink: #e8eae6; --muted: #98a29b; --rule: #2c3236; --accent: #7ea3d6;
     --pass: #379c65; --pass-bg: #163524; --fail: #d9584a; --fail-bg: #3a201d;
     --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+    --series-1: #3987e5; --series-2: #199e70; --series-3: #c98500;
+    --series-4: #008300; --series-5: #9085e9;
   }
   * { box-sizing: border-box; }
   body {
@@ -114,8 +120,36 @@
   .status-chip.pass { color: var(--pass); background: var(--pass-bg); }
   .status-chip.fail { color: var(--fail); background: var(--fail-bg); }
   .note { color: var(--muted); font-size: 11.5px; }
+  .model-legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-bottom: 20px; font-size: 13px; color: var(--muted); }
+  .model-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .model-legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  .s1 { background: var(--series-1); }
+  .s2 { background: var(--series-2); }
+  .s3 { background: var(--series-3); }
+  .s4 { background: var(--series-4); }
+  .s5 { background: var(--series-5); }
+  .metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .metric-chart {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 8px;
+    padding: 18px 20px 14px; box-shadow: var(--shadow);
+  }
+  .metric-chart h3 { font-size: 13.5px; font-weight: 600; margin: 0 0 14px; }
+  .metric-row { display: grid; grid-template-columns: 150px 1fr 66px; align-items: center; gap: 10px; margin-bottom: 9px; }
+  .metric-row:last-child { margin-bottom: 0; }
+  .metric-label {
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+    font-size: 11.5px; color: var(--muted); text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .metric-track { height: 15px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+  .metric-fill { height: 100%; border-radius: 4px; }
+  .metric-value {
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+    font-variant-numeric: tabular-nums; font-size: 12px; color: var(--ink);
+  }
+  .metric-note { color: var(--muted); font-size: 11.5px; margin: 12px 0 0; padding-top: 10px; border-top: 1px solid var(--rule); }
   footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--muted); }
-  @media (max-width: 640px) { .bar-row { grid-template-columns: 90px 1fr 70px; } h1 { font-size: 27px; } }
+  @media (max-width: 720px) { .metrics-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .bar-row { grid-template-columns: 90px 1fr 70px; } .metric-row { grid-template-columns: 100px 1fr 60px; } h1 { font-size: 27px; } }
 </style>
 </head>
 <body>
@@ -179,6 +213,195 @@
         <span><i class="pass"></i> Resolved</span>
         <span><i class="fail"></i> Not resolved</span>
       </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Averages per model, across all 9 PRs</h2>
+    <p class="h2-note">Same model, same color, in every panel below — so a bar's identity carries across metrics. FAIL_TO_PASS/PASS_TO_PASS are averaged as a per-task rate (passed/total), not raw counts, since PRs carry very different test-suite sizes.</p>
+    <div class="model-legend"><span><i class="s1"></i>laguna</span><span><i class="s2"></i>gemini-3.5-flash</span><span><i class="s3"></i>kimi-k2.7-code</span><span><i class="s4"></i>gpt-oss-120b</span><span><i class="s5"></i>claude-opus-4.8 (reasoning=high)</span></div>
+    <div class="metrics-grid">
+      
+    <div class="metric-chart">
+      <h3>Steps (avg)</h3>
+      
+      <div class="metric-row">
+        <div class="metric-label">laguna</div>
+        <div class="metric-track"><div class="metric-fill s1" style="width:100.0%"></div></div>
+        <div class="metric-value">79</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">gemini-3.5-flash</div>
+        <div class="metric-track"><div class="metric-fill s2" style="width:61.1%"></div></div>
+        <div class="metric-value">49</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">kimi-k2.7-code</div>
+        <div class="metric-track"><div class="metric-fill s3" style="width:37.8%"></div></div>
+        <div class="metric-value">30</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">gpt-oss-120b</div>
+        <div class="metric-track"><div class="metric-fill s4" style="width:48.0%"></div></div>
+        <div class="metric-value">38</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">claude-opus-4.8 (reasoning=high)</div>
+        <div class="metric-track"><div class="metric-fill s5" style="width:23.1%"></div></div>
+        <div class="metric-value">18</div>
+      </div>
+      <p class="metric-note">Mean tool-call/action count per run, across all 9 PRs.</p>
+    </div>
+    <div class="metric-chart">
+      <h3>Time to answer (avg)</h3>
+      
+      <div class="metric-row">
+        <div class="metric-label">laguna</div>
+        <div class="metric-track"><div class="metric-fill s1" style="width:100.0%"></div></div>
+        <div class="metric-value">3m 47s</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">gemini-3.5-flash</div>
+        <div class="metric-track"><div class="metric-fill s2" style="width:74.8%"></div></div>
+        <div class="metric-value">2m 50s</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">kimi-k2.7-code</div>
+        <div class="metric-track"><div class="metric-fill s3" style="width:99.8%"></div></div>
+        <div class="metric-value">3m 47s</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">gpt-oss-120b</div>
+        <div class="metric-track"><div class="metric-fill s4" style="width:99.9%"></div></div>
+        <div class="metric-value">3m 47s</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">claude-opus-4.8 (reasoning=high)</div>
+        <div class="metric-track"><div class="metric-fill s5" style="width:77.4%"></div></div>
+        <div class="metric-value">2m 56s</div>
+      </div>
+      <p class="metric-note">Mean wall-clock time per run, including timed-out runs.</p>
+    </div>
+    <div class="metric-chart">
+      <h3>Input tokens (avg)</h3>
+      
+      <div class="metric-row">
+        <div class="metric-label">laguna</div>
+        <div class="metric-track"><div class="metric-fill s1" style="width:100.0%"></div></div>
+        <div class="metric-value">2.41M</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">gemini-3.5-flash</div>
+        <div class="metric-track"><div class="metric-fill s2" style="width:39.8%"></div></div>
+        <div class="metric-value">959.3K</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">kimi-k2.7-code</div>
+        <div class="metric-track"><div class="metric-fill s3" style="width:22.4%"></div></div>
+        <div class="metric-value">541.4K</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">gpt-oss-120b</div>
+        <div class="metric-track"><div class="metric-fill s4" style="width:23.0%"></div></div>
+        <div class="metric-value">554.5K</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">claude-opus-4.8 (reasoning=high)</div>
+        <div class="metric-track"><div class="metric-fill s5" style="width:9.4%"></div></div>
+        <div class="metric-value">226.6K</div>
+      </div>
+      <p class="metric-note">Mean cumulative prompt tokens per run (grows with steps and context re-sent each turn).</p>
+    </div>
+    <div class="metric-chart">
+      <h3>Output tokens (avg)</h3>
+      
+      <div class="metric-row">
+        <div class="metric-label">laguna</div>
+        <div class="metric-track"><div class="metric-fill s1" style="width:100.0%"></div></div>
+        <div class="metric-value">16.6K</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">gemini-3.5-flash</div>
+        <div class="metric-track"><div class="metric-fill s2" style="width:54.9%"></div></div>
+        <div class="metric-value">9.1K</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">kimi-k2.7-code</div>
+        <div class="metric-track"><div class="metric-fill s3" style="width:60.7%"></div></div>
+        <div class="metric-value">10.1K</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">gpt-oss-120b</div>
+        <div class="metric-track"><div class="metric-fill s4" style="width:75.2%"></div></div>
+        <div class="metric-value">12.5K</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">claude-opus-4.8 (reasoning=high)</div>
+        <div class="metric-track"><div class="metric-fill s5" style="width:46.5%"></div></div>
+        <div class="metric-value">7.7K</div>
+      </div>
+      <p class="metric-note">Mean cumulative completion tokens per run.</p>
+    </div>
+    <div class="metric-chart">
+      <h3>FAIL_TO_PASS rate (avg)</h3>
+      
+      <div class="metric-row">
+        <div class="metric-label">laguna</div>
+        <div class="metric-track"><div class="metric-fill s1" style="width:77.9%"></div></div>
+        <div class="metric-value">39%</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">gemini-3.5-flash</div>
+        <div class="metric-track"><div class="metric-fill s2" style="width:77.9%"></div></div>
+        <div class="metric-value">39%</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">kimi-k2.7-code</div>
+        <div class="metric-track"><div class="metric-fill s3" style="width:100.0%"></div></div>
+        <div class="metric-value">50%</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">gpt-oss-120b</div>
+        <div class="metric-track"><div class="metric-fill s4" style="width:0.0%"></div></div>
+        <div class="metric-value">0%</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">claude-opus-4.8 (reasoning=high)</div>
+        <div class="metric-track"><div class="metric-fill s5" style="width:100.0%"></div></div>
+        <div class="metric-value">50%</div>
+      </div>
+      <p class="metric-note">Mean share of each PR's regression tests turned from failing to passing.</p>
+    </div>
+    <div class="metric-chart">
+      <h3>PASS_TO_PASS rate (avg)</h3>
+      
+      <div class="metric-row">
+        <div class="metric-label">laguna</div>
+        <div class="metric-track"><div class="metric-fill s1" style="width:100.0%"></div></div>
+        <div class="metric-value">80%</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">gemini-3.5-flash</div>
+        <div class="metric-track"><div class="metric-fill s2" style="width:100.0%"></div></div>
+        <div class="metric-value">80%</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">kimi-k2.7-code</div>
+        <div class="metric-track"><div class="metric-fill s3" style="width:100.0%"></div></div>
+        <div class="metric-value">80%</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">gpt-oss-120b</div>
+        <div class="metric-track"><div class="metric-fill s4" style="width:25.0%"></div></div>
+        <div class="metric-value">20%</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">claude-opus-4.8 (reasoning=high)</div>
+        <div class="metric-track"><div class="metric-fill s5" style="width:100.0%"></div></div>
+        <div class="metric-value">80%</div>
+      </div>
+      <p class="metric-note">Mean share of pre-existing tests kept passing (5 of 9 PRs have any).</p>
+    </div>
     </div>
   </section>
 
