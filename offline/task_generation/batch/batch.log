@@ -160,3 +160,12 @@
 [2026-07-03 21:15:20] pr-3474/gpt-oss-120b: already done, skipping
 [2026-07-03 21:15:20] pr-3460: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=1, PASS_TO_PASS=5
 [2026-07-03 21:15:20] pr-3460/laguna: running mini-swe-agent (openrouter/poolside/laguna-xs-2.1), timeout=572s (4x completed-peer average)
+[2026-07-03 21:20:01] pr-3460/laguna: submitted 1156 chars in 281s, grading...
+[2026-07-03 21:20:05] pr-3460/laguna: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 5/5
+[2026-07-03 21:20:05] pr-3460/gemini-3.5-flash: running mini-swe-agent (openrouter/google/gemini-3.5-flash), timeout=1124s (4x completed-peer average)
+[2026-07-03 21:24:05] pr-3460/gemini-3.5-flash: submitted 548 chars in 241s, grading...
+[2026-07-03 21:24:09] pr-3460/gemini-3.5-flash: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 5/5
+[2026-07-03 21:24:09] pr-3460/kimi-k2.7-code: running mini-swe-agent (openrouter/moonshotai/kimi-k2.7-code), timeout=1044s (4x completed-peer average)
+[2026-07-03 21:31:26] pr-3460/kimi-k2.7-code: submitted 1692 chars in 437s, grading...
+[2026-07-03 21:31:29] pr-3460/kimi-k2.7-code: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 5/5
+[2026-07-03 21:31:29] pr-3460/gpt-oss-120b: running mini-swe-agent (openrouter/openai/gpt-oss-120b), timeout=1279s (4x completed-peer average)
