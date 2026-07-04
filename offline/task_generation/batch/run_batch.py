@@ -11,8 +11,10 @@ session with no memory of this one.
 
 import json
 import os
+import queue
 import subprocess
 import sys
+import threading
 import time
 from pathlib import Path
 
@@ -114,7 +116,7 @@ def ensure_agent_image(number, base_commit):
 # Run one (pr, model) through mini-swe-agent
 # ---------------------------------------------------------------------------
 
-def run_agent(number, model_key, model_name, image_tag, problem_statement):
+def run_agent(number, model_key, model_name, image_tag, problem_statement, container_holder):
     from minisweagent.agents import get_agent
     from minisweagent.config import builtin_config_dir, get_config_from_spec
     from minisweagent.models import get_model
@@ -147,6 +149,10 @@ def run_agent(number, model_key, model_name, image_tag, problem_statement):
     config = recursive_merge(default_config, override)
 
     env = get_sb_environment(config, instance)
+    # Expose the container id to the caller immediately (this happens fast,
+    # well before the long agent.run() call) so a watchdog timeout can force
+    # -kill this exact container from the main thread if this run hangs.
+    container_holder["container_id"] = getattr(env, "container_id", None)
     agent = get_agent(get_model(config=config.get("model", {})), env, config.get("agent", {}), default_type="default")
     try:
         info = agent.run(problem_statement)
@@ -167,6 +173,63 @@ def run_agent(number, model_key, model_name, image_tag, problem_statement):
         except Exception as e:
             log(f"pr-{number}/{model_key}: container cleanup failed: {e}")
     return info
+
+
+def run_agent_with_timeout(number, model_key, model_name, image_tag, problem_statement, timeout_s):
+    """Run run_agent() on a daemon thread and enforce a hard wall-clock
+    timeout. agent.run() is a blocking in-process call with no built-in
+    cancellation, so the only reliable way to bound it is: run it off-thread,
+    join with a timeout, and if it's still alive, kill the docker container
+    out from under it (the surest way to unstick a hung `docker exec`) and
+    move on. The thread itself may linger (e.g. blocked in a slow HTTP call
+    to the model API rather than docker) but daemon=True means it can never
+    block the main process from exiting, and it can't corrupt shared state
+    since results are only written by the main thread after this returns.
+    """
+    result_q = queue.Queue()
+    container_holder = {}
+
+    def worker():
+        try:
+            info = run_agent(number, model_key, model_name, image_tag, problem_statement, container_holder)
+            result_q.put(("ok", info))
+        except Exception as e:
+            result_q.put(("error", e))
+
+    t = threading.Thread(target=worker, daemon=True)
+    t.start()
+    t.join(timeout=timeout_s)
+
+    if t.is_alive():
+        cid = container_holder.get("container_id")
+        if cid:
+            run(["docker", "rm", "-f", cid])
+        return "timeout", None
+
+    kind, payload = result_q.get_nowait()
+    if kind == "error":
+        raise payload
+    return "ok", payload
+
+
+def compute_timeout(number, floor=240.0, ceiling=1800.0, multiplier=4):
+    """4x the average elapsed time of already-completed attempts, preferring
+    peers on the *same* PR (a fair like-for-like baseline, since PRs vary
+    hugely in size) and falling back to the global average across every
+    completed combo so far when this PR has no peer data yet."""
+    def avg_from(pattern):
+        times = []
+        for f in RESULTS_DIR.glob(pattern):
+            try:
+                d = json.loads(f.read_text(encoding="utf-8"))
+                if d.get("exit_status") != "TimedOut":
+                    times.append(d["elapsed_seconds"])
+            except Exception:
+                continue
+        return (sum(times) / len(times)) if times else None
+
+    baseline = avg_from(f"pr-{number}__*.json") or avg_from("pr-*__*.json") or 120.0
+    return max(floor, min(ceiling, baseline * multiplier))
 
 
 # ---------------------------------------------------------------------------
@@ -243,12 +306,21 @@ def main():
                 log(f"pr-{number}/{model_key}: already done, skipping")
                 continue
 
-            log(f"pr-{number}/{model_key}: running mini-swe-agent ({model_name})")
+            timeout_s = compute_timeout(number)
+            log(f"pr-{number}/{model_key}: running mini-swe-agent ({model_name}), "
+                f"timeout={timeout_s:.0f}s (4x completed-peer average)")
             start = time.time()
             try:
-                info = run_agent(number, model_key, model_name, image_tag, problem_statement)
-                submission = info.get("submission") or ""
-                exit_status = info.get("exit_status")
+                outcome, info = run_agent_with_timeout(
+                    number, model_key, model_name, image_tag, problem_statement, timeout_s
+                )
+                if outcome == "timeout":
+                    log(f"pr-{number}/{model_key}: TIMED OUT after {timeout_s:.0f}s (4x peer average) "
+                        f"-- killed its container, marking failed, moving on")
+                    submission, exit_status = "", "TimedOut"
+                else:
+                    submission = info.get("submission") or ""
+                    exit_status = info.get("exit_status")
             except Exception as e:
                 log(f"pr-{number}/{model_key}: AGENT RUN FAILED: {e}")
                 submission, exit_status = "", f"error: {e}"

@@ -1,0 +1,50 @@
+{
+  "pr_number": 3460,
+  "log": [
+    "touched test files: ['nltk/test/conftest.py', 'nltk/test/unit/test_corpus_util.py']",
+    "candidates: 6 tests collected with test_patch + patch applied (post-fix)",
+    "phase1 (pre-fix): 1 fail (-> FAIL_TO_PASS), 5 already pass (-> PASS_TO_PASS)",
+    "phase2 (post-fix): 0 still not passing (dropped)"
+  ],
+  "status": "verified",
+  "updated_task": {
+    "repo": "nltk/nltk",
+    "pr_number": 3460,
+    "pr_title": "Avoid segfaults in LazyCorpusLoader._unload()",
+    "pr_url": "https://github.com/nltk/nltk/pull/3460",
+    "intent": {
+      "category": "bug_fix",
+      "other_label": "",
+      "rationale": "This PR fixes segmentation faults in LazyCorpusLoader._unload() when using Python 3.13, with supporting test additions to verify the fix.",
+      "confidence": 0.92
+    },
+    "base_commit": "7d7466226e44b3880bf7d55d19658986478ff2d7",
+    "merge_commit": "cba783d88c4e4be42d091ac0c39f8304fe85365b",
+    "diff_end_commit": "cba783d88c4e4be42d091ac0c39f8304fe85365b",
+    "patch": "patch.diff",
+    "test_patch": "test_patch.diff",
+    "FAIL_TO_PASS": [
+      "unit/test_corpus_util.py::test_dunder_access_does_not_trigger_load"
+    ],
+    "PASS_TO_PASS": [
+      "unit/test_corpus_util.py::TestMakeBoundMethod::test_bound_method_has_correct_self",
+      "unit/test_corpus_util.py::TestMakeBoundMethod::test_bound_method_with_arguments",
+      "unit/test_corpus_util.py::TestMakeBoundMethod::test_creates_bound_method",
+      "unit/test_corpus_util.py::test_load_unload_reload_cycle",
+      "unit/test_corpus_util.py::test_repr_not_loaded"
+    ],
+    "_status": "verified"
+  },
+  "FAIL_TO_PASS": [
+    "unit/test_corpus_util.py::test_dunder_access_does_not_trigger_load"
+  ],
+  "PASS_TO_PASS": [
+    "unit/test_corpus_util.py::TestMakeBoundMethod::test_bound_method_has_correct_self",
+    "unit/test_corpus_util.py::TestMakeBoundMethod::test_bound_method_with_arguments",
+    "unit/test_corpus_util.py::TestMakeBoundMethod::test_creates_bound_method",
+    "unit/test_corpus_util.py::test_load_unload_reload_cycle",
+    "unit/test_corpus_util.py::test_repr_not_loaded"
+  ],
+  "dropped_still_failing_post_fix": [],
+  "elapsed_seconds": 6.3
+}

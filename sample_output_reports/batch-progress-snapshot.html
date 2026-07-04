@@ -151,48 +151,48 @@
 
   <p class="eyebrow">Batch evaluation · in progress</p>
   <h1>10 PRs × 4 models — live progress snapshot</h1>
-  <p class="dek">mini-swe-agent attempting real, previously-unseen NLTK bug fixes, each graded against its PR's actual FAIL_TO_PASS/PASS_TO_PASS test suite in the isolated (single-commit, network-blocked) agent environment. Snapshot taken mid-run — 5 of 10 PRs processed so far.</p>
+  <p class="dek">mini-swe-agent attempting real, previously-unseen NLTK bug fixes, each graded against its PR's actual FAIL_TO_PASS/PASS_TO_PASS test suite in an isolated (single-commit, network-blocked) agent environment. Snapshot taken mid-run — 6 of 10 PRs fully processed so far.</p>
 
   <dl class="meta-row">
     <div><dt>Repo</dt> <code>nltk/nltk</code></div>
     <div><dt>Models</dt> <code>laguna</code>, <code>gemini-3.5-flash</code>, <code>kimi-k2.7-code</code>, <code>gpt-oss-120b</code></div>
-    <div><dt>Combos done</dt> 17 / 40</div>
+    <div><dt>Combos done</dt> 24 / 40</div>
   </dl>
 
   <section>
     <h2>Resolved rate per model, so far</h2>
-    <p class="h2-note">Stacked by outcome, out of PRs attempted by that model at snapshot time (gpt-oss-120b has one extra in-flight attempt ahead of the others).</p>
+    <p class="h2-note">Stacked by outcome, out of the 6 PRs each model has attempted at snapshot time.</p>
     <div class="chart">
       <div class="bar-row">
         <div class="bar-label">laguna</div>
         <div class="bar-track">
           <div class="bar-seg pass" style="flex:3"><span>3 resolved</span></div>
-          <div class="bar-seg fail" style="flex:1"><span>1</span></div>
+          <div class="bar-seg fail" style="flex:3"><span>3</span></div>
         </div>
-        <div class="bar-total">3 / 4</div>
+        <div class="bar-total">3 / 6</div>
       </div>
       <div class="bar-row">
         <div class="bar-label">gemini-3.5-flash</div>
         <div class="bar-track">
           <div class="bar-seg pass" style="flex:3"><span>3 resolved</span></div>
-          <div class="bar-seg fail" style="flex:1"><span>1</span></div>
+          <div class="bar-seg fail" style="flex:3"><span>3</span></div>
         </div>
-        <div class="bar-total">3 / 4</div>
+        <div class="bar-total">3 / 6</div>
       </div>
       <div class="bar-row">
         <div class="bar-label">kimi-k2.7-code</div>
         <div class="bar-track">
           <div class="bar-seg pass" style="flex:3"><span>3 resolved</span></div>
-          <div class="bar-seg fail" style="flex:1"><span>1</span></div>
+          <div class="bar-seg fail" style="flex:3"><span>3</span></div>
         </div>
-        <div class="bar-total">3 / 4</div>
+        <div class="bar-total">3 / 6</div>
       </div>
       <div class="bar-row">
         <div class="bar-label">gpt-oss-120b</div>
         <div class="bar-track">
-          <div class="bar-seg fail" style="flex:5"><span>0 resolved / 5 attempted</span></div>
+          <div class="bar-seg fail" style="flex:6"><span>0 resolved / 6 attempted</span></div>
         </div>
-        <div class="bar-total">0 / 5</div>
+        <div class="bar-total">0 / 6</div>
       </div>
       <div class="legend">
         <span><i class="pass"></i> Resolved</span>
@@ -268,20 +268,34 @@
       </div>
       <table>
         <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Resolved</th></tr>
-        <tr><td class="model">laguna</td><td class="num" colspan="3"><span class="note">running…</span></td></tr>
-        <tr><td class="model">gemini-3.5-flash</td><td class="num" colspan="3"><span class="note">pending</span></td></tr>
-        <tr><td class="model">kimi-k2.7-code</td><td class="num" colspan="3"><span class="note">pending</span></td></tr>
+        <tr><td class="model">laguna</td><td class="num">0 / 1</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
+        <tr><td class="model">gemini-3.5-flash</td><td class="num">0 / 1</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
+        <tr><td class="model">kimi-k2.7-code</td><td class="num">0 / 1</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
         <tr><td class="model">gpt-oss-120b</td><td class="num">0 / 1</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
       </table>
     </div>
 
-    <p class="note">Remaining: #3474, #3460, #3451, #3411, #3371 not yet started.</p>
+    <div class="pr-group">
+      <div class="pr-head">
+        <span class="title">#3474 — Support some zipped models</span>
+        <span class="num">bug_fix</span>
+      </div>
+      <table>
+        <tr><th>Model</th><th>FAIL_TO_PASS</th><th>PASS_TO_PASS</th><th>Resolved</th></tr>
+        <tr><td class="model">laguna</td><td class="num">1 / 32</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
+        <tr><td class="model">gemini-3.5-flash</td><td class="num">1 / 32</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
+        <tr><td class="model">kimi-k2.7-code</td><td class="num">1 / 32</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
+        <tr><td class="model">gpt-oss-120b</td><td class="num">0 / 32</td><td class="num">— (0)</td><td><span class="status-chip fail">No</span></td></tr>
+      </table>
+    </div>
+
+    <p class="note">In progress: #3460. Remaining: #3451, #3411, #3371 not yet started.</p>
   </section>
 
   <section>
-    <h2>What's already visible</h2>
+    <h2>What's visible so far</h2>
     <p class="h2-note" style="max-width:70ch">
-      <code>gpt-oss-120b</code> has failed to submit a patch on every single PR so far (5/5), always via <code>RepeatedFormatError</code> — a mini-swe-agent-side protocol/tool-call-format issue, not random bad luck. The other three models resolve most PRs they attempt (3 of 4 fully done), with PR #3672 the one case where all three agree on a partial (but not full) fix — worth a closer look once the full 10 are in, since three independent models converging on the same partial gap is a stronger signal than any one of them alone.
+      <code>gpt-oss-120b</code> has failed to submit a patch on every single PR (6/6), always via <code>RepeatedFormatError</code> — a protocol/tool-call-format incompatibility with mini-swe-agent, not bad luck. The other three models track each other closely (3/6 resolved each) and, notably, agree on <em>which</em> PRs they solve and which they don't — same 3 resolved (#3644, #3641, #3544), same 3 not (#3672, #3487, #3474). On PR #3672 specifically, all three independently converged on the same O(n)-conversion algorithmic fix while missing the same two input-validation edge cases — a real, verified finding (compared actual patch text, not just scores), not a broken model-selection bug. PR #3474 (32 FAIL_TO_PASS tests, by far the largest task) is the one case where every model made real but very partial progress (1/32).
     </p>
   </section>
 
