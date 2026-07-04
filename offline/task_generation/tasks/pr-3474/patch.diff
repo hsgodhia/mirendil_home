@@ -1,0 +1,186 @@
+diff --git a/nltk/classify/maxent.py b/nltk/classify/maxent.py
+index 5491b23b..67d6e2cc 100644
+--- a/nltk/classify/maxent.py
++++ b/nltk/classify/maxent.py
+@@ -1564,20 +1564,21 @@ class TadmMaxentClassifier(MaxentClassifier):
+ def load_maxent_params(tab_dir):
+     import numpy
+ 
++    from nltk.data import open_datafile
+     from nltk.tabdata import MaxentDecoder
+ 
+     mdec = MaxentDecoder()
+-
+-    with open(f"{tab_dir}/weights.txt") as f:
++    # Use .join() to reach the files regardless of zip/real FS.
++    with open_datafile(tab_dir, "weights.txt") as f:
+         wgt = numpy.array(list(map(numpy.float64, mdec.txt2list(f))))
+ 
+-    with open(f"{tab_dir}/mapping.tab") as f:
++    with open_datafile(tab_dir, "mapping.tab") as f:
+         mpg = mdec.tupkey2dict(f)
+ 
+-    with open(f"{tab_dir}/labels.txt") as f:
++    with open_datafile(tab_dir, "labels.txt") as f:
+         lab = mdec.txt2list(f)
+ 
+-    with open(f"{tab_dir}/alwayson.tab") as f:
++    with open_datafile(tab_dir, "alwayson.tab") as f:
+         aon = mdec.tab2ivdict(f)
+ 
+     return wgt, mpg, lab, aon
+@@ -1610,7 +1611,7 @@ def maxent_pos_tagger():
+     from nltk.data import find
+     from nltk.tag.sequential import ClassifierBasedPOSTagger
+ 
+-    tab_dir = find("taggers/maxent_treebank_pos_tagger_tab/english")
++    tab_dir = find("taggers/maxent_treebank_pos_tagger_tab/english/")
+     wgt, mpg, lab, aon = load_maxent_params(tab_dir)
+     mc = MaxentClassifier(
+         BinaryMaxentFeatureEncoding(lab, mpg, alwayson_features=aon), wgt
+diff --git a/nltk/data.py b/nltk/data.py
+index c65c69e8..aeb18859 100644
+--- a/nltk/data.py
++++ b/nltk/data.py
+@@ -464,6 +464,36 @@ _resource_cache = {}
+    need to be loaded more than once."""
+ 
+ 
++def open_datafile(path, file_name="", encoding="utf-8"):
++    """
++    Open a data file using a PathPointer, supporting both filesystem and zip file paths.
++
++    The function can be used in two ways:
++
++    1. `path` is a PathPointer to a directory, and `file_name` is the name of a file
++       within that directory.
++    2. `path` is a PathPointer to a file, and `file_name` is left empty.
++
++    :param path: A PathPointer (e.g. FileSystemPathPointer or ZipFilePathPointer)
++        representing either the file to open (when file_name is empty), or the
++        directory containing the file.
++    :type path: PathPointer
++    :param file_name: The name of the file to open within the directory. Leave empty
++        if `path` already points to the file.
++    :type file_name: str
++    :param encoding: The character encoding to use when opening the file. If None,
++        a binary stream is returned.
++    :type encoding: str or None
++    :return: A file-like object (binary stream if encoding is None, otherwise a text
++        stream with the specified encoding).
++    :rtype: file-like
++    """
++    if file_name:
++        # Use .join() to reach the file regardless of zip/real FS.
++        path = path.join(file_name)
++    return path.open(encoding=encoding)
++
++
+ def find(resource_name, paths=None):
+     """
+     Find the given resource by searching through the directories and
+diff --git a/nltk/help.py b/nltk/help.py
+index 15f6abee..ee48abd4 100644
+--- a/nltk/help.py
++++ b/nltk/help.py
+@@ -13,7 +13,7 @@ import json
+ import re
+ from textwrap import wrap
+ 
+-from nltk.data import find
++from nltk.data import find, open_datafile
+ 
+ 
+ def brown_tagset(tagpattern=None):
+@@ -45,8 +45,7 @@ def _print_entries(tags, tagdict):
+ 
+ def _format_tagset(tagset, tagpattern=None):
+     # Load tagset from json file.
+-    tag_json_file = find(f"help/tagsets_json/PY3_json/{tagset}.json")
+-    with open(tag_json_file) as fin:
++    with open_datafile(find("help/tagsets_json/PY3_json/"), f"{tagset}.json") as fin:
+         tagdict = json.load(fin)
+ 
+     if not tagpattern:
+diff --git a/nltk/tag/mapping.py b/nltk/tag/mapping.py
+index ffd0cf65..c9b399d0 100644
+--- a/nltk/tag/mapping.py
++++ b/nltk/tag/mapping.py
+@@ -34,7 +34,7 @@ from os.path import join
+ 
+ from nltk.data import load
+ 
+-_UNIVERSAL_DATA = "taggers/universal_tagset"
++_UNIVERSAL_DATA = "taggers/universal_tagset/"
+ _UNIVERSAL_TAGS = (
+     "VERB",
+     "NOUN",
+diff --git a/nltk/tag/perceptron.py b/nltk/tag/perceptron.py
+index 8f49f125..eb9ae400 100644
+--- a/nltk/tag/perceptron.py
++++ b/nltk/tag/perceptron.py
+@@ -16,7 +16,7 @@ from os.path import join as path_join
+ from tempfile import gettempdir
+ 
+ from nltk import jsontags
+-from nltk.data import find, load
++from nltk.data import find, open_datafile
+ from nltk.tag.api import TaggerI
+ 
+ try:
+@@ -136,7 +136,8 @@ class PerceptronTagger(TaggerI):
+ 
+     Load the saved model:
+ 
+-    >>> tagger2 = PerceptronTagger(loc=tagger.save_dir)
++    >>> from nltk.data import find
++    >>> tagger2 = PerceptronTagger(loc=find(tagger.save_dir))
+     >>> print(sorted(list(tagger2.classes)))
+     ['JJ', 'NN', 'NNS', 'PRP', 'VBZ']
+ 
+@@ -273,11 +274,12 @@ class PerceptronTagger(TaggerI):
+ 
+     def load_from_json(self, lang="eng", loc=None):
+         # Automatically find path to the tagger if location is not specified.
++        # loc can refer to zip or real FS
+         if not loc:
+-            loc = find(f"taggers/averaged_perceptron_tagger_{lang}")
++            loc = find(f"taggers/averaged_perceptron_tagger_{lang}/")
+ 
+         def load_param(json_file):
+-            with open(path_join(loc, json_file)) as fin:
++            with open_datafile(loc, json_file) as fin:
+                 return json.load(fin)
+ 
+         self.decode_json_params(
+diff --git a/nltk/tokenize/punkt.py b/nltk/tokenize/punkt.py
+index 877b79dd..1ba0517f 100644
+--- a/nltk/tokenize/punkt.py
++++ b/nltk/tokenize/punkt.py
+@@ -1755,18 +1755,21 @@ class PunktTokenizer(PunktSentenceTokenizer):
+ 
+ 
+ def load_punkt_params(lang_dir):
++    from nltk.data import open_datafile
+     from nltk.tabdata import PunktDecoder
+ 
+-    pdec = PunktDecoder()
+     # Make a new Parameters object:
+     params = PunktParameters()
+-    with open(f"{lang_dir}/collocations.tab", encoding="utf-8") as f:
++
++    pdec = PunktDecoder()
++    # Use .join() to reach the files regardless of zip/real FS.
++    with open_datafile(lang_dir, "collocations.tab") as f:
+         params.collocations = set(pdec.tab2tups(f))
+-    with open(f"{lang_dir}/sent_starters.txt", encoding="utf-8") as f:
++    with open_datafile(lang_dir, "sent_starters.txt") as f:
+         params.sent_starters = pdec.txt2set(f)
+-    with open(f"{lang_dir}/abbrev_types.txt", encoding="utf-8") as f:
++    with open_datafile(lang_dir, "abbrev_types.txt") as f:
+         params.abbrev_types = pdec.txt2set(f)
+-    with open(f"{lang_dir}/ortho_context.tab", encoding="utf-8") as f:
++    with open_datafile(lang_dir, "ortho_context.tab") as f:
+         params.ortho_context = pdec.tab2intdict(f)
+     return params
+ 

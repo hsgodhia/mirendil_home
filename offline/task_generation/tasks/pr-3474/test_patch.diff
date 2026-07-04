@@ -1,0 +1,184 @@
+diff --git a/nltk/test/unit/test_json2csv_corpus.py b/nltk/test/unit/test_json2csv_corpus.py
+index c57a217d..0bf26df4 100644
+--- a/nltk/test/unit/test_json2csv_corpus.py
++++ b/nltk/test/unit/test_json2csv_corpus.py
+@@ -14,6 +14,7 @@ from pathlib import Path
+ import pytest
+ 
+ from nltk.corpus import twitter_samples
++from nltk.data import open_datafile
+ from nltk.twitter.common import json2csv, json2csv_entities
+ 
+ 
+@@ -32,7 +33,9 @@ subdir = Path(__file__).parent / "files"
+ 
+ @pytest.fixture
+ def infile():
+-    with open(twitter_samples.abspath("tweets.20150430-223406.json")) as infile:
++    with open_datafile(
++        twitter_samples.abspath("tweets.20150430-223406.json")
++    ) as infile:
+         return [next(infile) for x in range(100)]
+ 
+ 
+diff --git a/nltk/test/unit/test_open_datafile.py b/nltk/test/unit/test_open_datafile.py
+new file mode 100644
+index 00000000..2d2c2d96
+--- /dev/null
++++ b/nltk/test/unit/test_open_datafile.py
+@@ -0,0 +1,82 @@
++import os
++import zipfile
++from tempfile import TemporaryDirectory
++
++from nltk.data import ZipFilePathPointer, open_datafile
++
++
++def _create_test_zip(root_dir, rel_dir, file_name, contents: bytes):
++    """
++    Create a zip file under root_dir with a single file at rel_dir/file_name
++    containing 'contents'. Return the full path to the zip file and the
++    relative path inside the zip.
++    """
++    zip_path = os.path.join(root_dir, "testdata.zip")
++    arcname = os.path.join(rel_dir, file_name).replace(os.path.sep, "/")
++
++    with zipfile.ZipFile(zip_path, "w") as zf:
++        zf.writestr(arcname, contents)
++
++    return zip_path, arcname
++
++
++def test_open_datafile_directory_and_filename_from_zip():
++    """open_datafile should open a file inside a zip when given dir + file_name."""
++    with TemporaryDirectory() as tmpdir:
++        rel_dir = os.path.join("corpora", "testpkg")
++        file_name = "sample.txt"
++        text = "Hello from zipped data\n"
++        data = text.encode("utf-8")
++
++        zip_path, arcname = _create_test_zip(tmpdir, rel_dir, file_name, data)
++
++        # Directory entry inside the zip (must end with '/').
++        dir_entry = rel_dir.replace(os.path.sep, "/") + "/"
++
++        # PathPointer representing the *directory* inside the zip.
++        path = ZipFilePathPointer(zip_path, dir_entry)
++
++        with open_datafile(path, file_name=file_name, encoding="utf-8") as f:
++            result = f.read()
++
++        assert result == text
++
++
++def test_open_datafile_file_pointer_from_zip():
++    """open_datafile should open a file pointer directly when file_name is empty."""
++    with TemporaryDirectory() as tmpdir:
++        rel_dir = os.path.join("corpora", "testpkg")
++        file_name = "sample.txt"
++        text = "Direct file pointer from zipped data\n"
++        data = text.encode("utf-8")
++
++        zip_path, arcname = _create_test_zip(tmpdir, rel_dir, file_name, data)
++
++        # Directory pointer first, then join to the file to simulate having a file pointer.
++        dir_entry = rel_dir.replace(os.path.sep, "/") + "/"
++        dir_pointer = ZipFilePathPointer(zip_path, dir_entry)
++        file_pointer = dir_pointer.join(file_name)
++
++        with open_datafile(file_pointer, encoding="utf-8") as f:
++            result = f.read()
++
++        assert result == text
++
++
++def test_open_datafile_binary_mode_from_zip():
++    """open_datafile should return a binary stream when encoding=None."""
++    with TemporaryDirectory() as tmpdir:
++        rel_dir = os.path.join("corpora", "testpkg")
++        file_name = "binary.bin"
++        binary_data = b"\x00\x01\x02\xff"
++
++        zip_path, arcname = _create_test_zip(tmpdir, rel_dir, file_name, binary_data)
++
++        dir_entry = rel_dir.replace(os.path.sep, "/") + "/"
++        dir_pointer = ZipFilePathPointer(zip_path, dir_entry)
++
++        with open_datafile(dir_pointer, file_name=file_name, encoding=None) as f:
++            result = f.read()
++
++        assert isinstance(result, (bytes, bytearray))
++        assert result == binary_data
+diff --git a/nltk/test/unit/test_pl196x.py b/nltk/test/unit/test_pl196x.py
+index 81535534..c15a7525 100644
+--- a/nltk/test/unit/test_pl196x.py
++++ b/nltk/test/unit/test_pl196x.py
+@@ -6,7 +6,7 @@ from nltk.corpus.reader import pl196x
+ 
+ class TestCorpusViews(unittest.TestCase):
+     def test_corpus_reader(self):
+-        pl196x_dir = nltk.data.find("corpora/pl196x")
++        pl196x_dir = nltk.data.find("corpora/pl196x/")
+         pl = pl196x.Pl196xCorpusReader(
+             pl196x_dir, r".*\.xml", textids="textids.txt", cat_file="cats.txt"
+         )
+diff --git a/nltk/test/unit/translate/test_bleu.py b/nltk/test/unit/translate/test_bleu.py
+index 496ce924..203b44b1 100644
+--- a/nltk/test/unit/translate/test_bleu.py
++++ b/nltk/test/unit/translate/test_bleu.py
+@@ -6,7 +6,7 @@ import unittest
+ 
+ import pytest
+ 
+-from nltk.data import find
++from nltk.data import find, open_datafile
+ from nltk.translate.bleu_score import (
+     SmoothingFunction,
+     brevity_penalty,
+@@ -237,13 +237,13 @@ class TestBLEUvsMteval13a(unittest.TestCase):
+ 
+         # Reads the BLEU scores from the `mteval-13a.output` file.
+         # The order of the list corresponds to the order of the ngrams.
+-        with open(mteval_output_file) as mteval_fin:
++        with open_datafile(mteval_output_file) as mteval_fin:
+             # The numbers are located in the last 2nd line of the file.
+             # The first and 2nd item in the list are the score and system names.
+             mteval_bleu_scores = map(float, mteval_fin.readlines()[-2].split()[1:-1])
+ 
+-        with open(ref_file, encoding="utf8") as ref_fin:
+-            with open(hyp_file, encoding="utf8") as hyp_fin:
++        with open_datafile(ref_file, encoding="utf8") as ref_fin:
++            with open_datafile(hyp_file, encoding="utf8") as hyp_fin:
+                 # Whitespace tokenize the file.
+                 # Note: split() automatically strip().
+                 hypothesis = list(map(lambda x: x.split(), hyp_fin))
+diff --git a/nltk/test/unit/translate/test_nist.py b/nltk/test/unit/translate/test_nist.py
+index 817aaae0..21ea509a 100644
+--- a/nltk/test/unit/translate/test_nist.py
++++ b/nltk/test/unit/translate/test_nist.py
+@@ -5,7 +5,7 @@ Tests for NIST translation evaluation metric
+ import io
+ import unittest
+ 
+-from nltk.data import find
++from nltk.data import find, open_datafile
+ from nltk.translate.nist_score import corpus_nist
+ 
+ 
+@@ -17,13 +17,13 @@ class TestNIST(unittest.TestCase):
+ 
+         # Reads the NIST scores from the `mteval-13a.output` file.
+         # The order of the list corresponds to the order of the ngrams.
+-        with open(mteval_output_file) as mteval_fin:
++        with open_datafile(mteval_output_file) as mteval_fin:
+             # The numbers are located in the last 4th line of the file.
+             # The first and 2nd item in the list are the score and system names.
+             mteval_nist_scores = map(float, mteval_fin.readlines()[-4].split()[1:-1])
+ 
+-        with open(ref_file, encoding="utf8") as ref_fin:
+-            with open(hyp_file, encoding="utf8") as hyp_fin:
++        with open_datafile(ref_file, encoding="utf8") as ref_fin:
++            with open_datafile(hyp_file, encoding="utf8") as hyp_fin:
+                 # Whitespace tokenize the file.
+                 # Note: split() automatically strip().
+                 hypotheses = list(map(lambda x: x.split(), hyp_fin))
