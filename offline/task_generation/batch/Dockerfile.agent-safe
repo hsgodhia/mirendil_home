@@ -1,0 +1,22 @@
+ARG BASE_IMAGE=nltk-agent-base:latest
+FROM ${BASE_IMAGE}
+
+# Shallow, single-commit fetch by exact SHA -- NOT a full clone. A full
+# clone carries every branch and every future commit in the live repo,
+# including (for an already-merged PR) the PR's own branch and the actual
+# fix commits, which an agent can read out with `git log --all` instead of
+# reasoning about the bug (confirmed empirically on PR #3564). This leaves
+# exactly one commit reachable, with no remote and no other refs.
+ARG NLTK_COMMIT
+RUN test -n "$NLTK_COMMIT" || (echo "NLTK_COMMIT build-arg is required" && exit 1)
+RUN git init -q /repo \
+ && cd /repo \
+ && git remote add origin https://github.com/nltk/nltk.git \
+ && git fetch --depth 1 origin ${NLTK_COMMIT} \
+ && git checkout -q FETCH_HEAD \
+ && git checkout -q -b work \
+ && rm -rf .git/refs/remotes .git/packed-refs \
+ && git remote remove origin
+
+WORKDIR /repo
+RUN pip install --no-cache-dir -e . --no-deps

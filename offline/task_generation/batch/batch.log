@@ -1,0 +1,40 @@
+[2026-07-03 20:07:24] === batch start: 1 PRs x 1 models = 1 combos, 0 already done ===
+[2026-07-03 20:07:24] pr-3487: generating task config
+[2026-07-03 20:07:25] pr-3487: verifying FAIL_TO_PASS/PASS_TO_PASS in Docker
+[2026-07-03 20:07:29] pr-3487: SKIPPING all models -- no verified FAIL_TO_PASS tests for this task (status=no_tests_found)
+[2026-07-03 20:07:29] === batch complete ===
+[2026-07-03 20:09:24] === batch start: 1 PRs x 1 models = 1 combos, 0 already done ===
+[2026-07-03 20:09:25] pr-3487: problem statement source = issue #3486, FAIL_TO_PASS=1, PASS_TO_PASS=0
+[2026-07-03 20:09:25] pr-3487: building agent-safe image (nltk-agent-safe:pr-3487) at commit be9afd3606
+[2026-07-03 20:09:29] pr-3487/gpt-oss-120b: running mini-swe-agent (openrouter/openai/gpt-oss-120b)
+[2026-07-03 20:12:11] pr-3487/gpt-oss-120b: submitted 1414 chars in 162s, grading...
+[2026-07-03 20:12:13] pr-3487/gpt-oss-120b: DONE -- resolved=False FAIL_TO_PASS 0/1 PASS_TO_PASS 0/0
+[2026-07-03 20:12:13] === batch complete ===
+[2026-07-03 20:13:19] === batch start: 10 PRs x 4 models = 40 combos, 1 already done ===
+[2026-07-03 20:13:19] pr-3672: generating task config
+[2026-07-03 20:13:20] pr-3672: verifying FAIL_TO_PASS/PASS_TO_PASS in Docker
+[2026-07-03 20:14:29] pr-3672: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=4, PASS_TO_PASS=14
+[2026-07-03 20:14:29] pr-3672: building agent-safe image (nltk-agent-safe:pr-3672) at commit 21e5219e3d
+[2026-07-03 20:14:35] pr-3672/laguna: running mini-swe-agent (openrouter/poolside/laguna-xs-2.1)
+[2026-07-03 20:16:33] pr-3672/laguna: submitted 1870 chars in 118s, grading...
+[2026-07-03 20:16:39] pr-3672/laguna: DONE -- resolved=False FAIL_TO_PASS 2/4 PASS_TO_PASS 14/14
+[2026-07-03 20:16:39] pr-3672/gemini-3.5-flash: running mini-swe-agent (openrouter/google/gemini-3.5-flash)
+[2026-07-03 20:17:09] pr-3672/gemini-3.5-flash: submitted 1521 chars in 30s, grading...
+[2026-07-03 20:17:14] pr-3672/gemini-3.5-flash: DONE -- resolved=False FAIL_TO_PASS 2/4 PASS_TO_PASS 14/14
+[2026-07-03 20:17:14] pr-3672/kimi-k2.7-code: running mini-swe-agent (openrouter/moonshotai/kimi-k2.7-code)
+[2026-07-03 20:18:47] pr-3672/kimi-k2.7-code: submitted 1646 chars in 93s, grading...
+[2026-07-03 20:18:52] pr-3672/kimi-k2.7-code: DONE -- resolved=False FAIL_TO_PASS 2/4 PASS_TO_PASS 14/14
+[2026-07-03 20:18:52] pr-3672/gpt-oss-120b: running mini-swe-agent (openrouter/openai/gpt-oss-120b)
+[2026-07-03 20:19:23] pr-3672/gpt-oss-120b: no submission (exit_status=RepeatedFormatError), skipping grading
+[2026-07-03 20:19:23] pr-3672/gpt-oss-120b: DONE -- resolved=False FAIL_TO_PASS 0/4 PASS_TO_PASS 0/14
+[2026-07-03 20:19:23] pr-3644: generating task config
+[2026-07-03 20:19:26] pr-3644: verifying FAIL_TO_PASS/PASS_TO_PASS in Docker
+[2026-07-03 20:19:34] pr-3644: problem statement source = PR description (no linked issue found), FAIL_TO_PASS=4, PASS_TO_PASS=52
+[2026-07-03 20:19:34] pr-3644: building agent-safe image (nltk-agent-safe:pr-3644) at commit 7a5740af89
+[2026-07-03 20:19:39] pr-3644/laguna: running mini-swe-agent (openrouter/poolside/laguna-xs-2.1)
+[2026-07-03 20:24:23] pr-3644/laguna: submitted 3825 chars in 284s, grading...
+[2026-07-03 20:24:27] pr-3644/laguna: DONE -- resolved=True FAIL_TO_PASS 4/4 PASS_TO_PASS 52/52
+[2026-07-03 20:24:27] pr-3644/gemini-3.5-flash: running mini-swe-agent (openrouter/google/gemini-3.5-flash)
+[2026-07-03 20:26:29] pr-3644/gemini-3.5-flash: submitted 2573 chars in 122s, grading...
+[2026-07-03 20:26:33] pr-3644/gemini-3.5-flash: DONE -- resolved=True FAIL_TO_PASS 4/4 PASS_TO_PASS 52/52
+[2026-07-03 20:26:33] pr-3644/kimi-k2.7-code: running mini-swe-agent (openrouter/moonshotai/kimi-k2.7-code)

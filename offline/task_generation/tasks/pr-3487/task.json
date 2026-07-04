@@ -1,0 +1,22 @@
+{
+  "repo": "nltk/nltk",
+  "pr_number": 3487,
+  "pr_title": "Warn on unpickling user-provided pickles",
+  "pr_url": "https://github.com/nltk/nltk/pull/3487",
+  "intent": {
+    "category": "security_fix",
+    "other_label": "",
+    "rationale": "PR addresses a security vulnerability by implementing warnings when unpickling user-provided pickle files, which can execute arbitrary code, and centralizes pickle security utilities in a dedicated module.",
+    "confidence": 0.95
+  },
+  "base_commit": "be9afd360696fb846ea34939d9638a164728f8fa",
+  "merge_commit": "69d8020160d99d4817de75297409efdf41e7cbed",
+  "diff_end_commit": "69d8020160d99d4817de75297409efdf41e7cbed",
+  "patch": "patch.diff",
+  "test_patch": "test_patch.diff",
+  "FAIL_TO_PASS": [
+    "unit/test_pickle_load_warnings.py::test_pickle_load_emits_warning"
+  ],
+  "PASS_TO_PASS": [],
+  "_status": "verified"
+}

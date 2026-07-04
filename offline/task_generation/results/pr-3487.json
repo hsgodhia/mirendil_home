@@ -1,0 +1,41 @@
+{
+  "pr_number": 3487,
+  "log": [
+    "touched test files: ['nltk/test/unit/test_pickle_load_warnings.py']",
+    "candidates: 3 tests collected with test_patch + patch applied (post-fix)",
+    "phase1 (pre-fix): 3 fail (-> FAIL_TO_PASS), 0 already pass (-> PASS_TO_PASS)",
+    "phase2 (post-fix): 2 still not passing (dropped)"
+  ],
+  "status": "verified",
+  "updated_task": {
+    "repo": "nltk/nltk",
+    "pr_number": 3487,
+    "pr_title": "Warn on unpickling user-provided pickles",
+    "pr_url": "https://github.com/nltk/nltk/pull/3487",
+    "intent": {
+      "category": "security_fix",
+      "other_label": "",
+      "rationale": "PR addresses a security vulnerability by implementing warnings when unpickling user-provided pickle files, which can execute arbitrary code, and centralizes pickle security utilities in a dedicated module.",
+      "confidence": 0.95
+    },
+    "base_commit": "be9afd360696fb846ea34939d9638a164728f8fa",
+    "merge_commit": "69d8020160d99d4817de75297409efdf41e7cbed",
+    "diff_end_commit": "69d8020160d99d4817de75297409efdf41e7cbed",
+    "patch": "patch.diff",
+    "test_patch": "test_patch.diff",
+    "FAIL_TO_PASS": [
+      "unit/test_pickle_load_warnings.py::test_pickle_load_emits_warning"
+    ],
+    "PASS_TO_PASS": [],
+    "_status": "verified"
+  },
+  "FAIL_TO_PASS": [
+    "unit/test_pickle_load_warnings.py::test_pickle_load_emits_warning"
+  ],
+  "PASS_TO_PASS": [],
+  "dropped_still_failing_post_fix": [
+    "unit/test_pickle_load_warnings.py::test_chartparser_app_uses_pickle_load_not_pickle_load_standard",
+    "unit/test_pickle_load_warnings.py::test_transitionparser_warns_on_model_unpickle"
+  ],
+  "elapsed_seconds": 6.2
+}

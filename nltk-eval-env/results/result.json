@@ -1,0 +1,35 @@
+{
+  "resolved": true,
+  "FAIL_TO_PASS": {
+    "unit/test_tnt.py::test_invalid_n_raises_value_error": "passed",
+    "unit/test_tnt.py::test_empty_training_resets_interpolation_weights": "passed",
+    "unit/test_tnt.py::test_interpolation_weights_are_normalized": "passed",
+    "unit/test_tnt.py::test_repeated_train_rebuilds_state_and_clears_decode_cache": "passed",
+    "unit/test_tnt.py::test_external_unk_train_respects_trained_flag": "passed",
+    "unit/test_tnt.py::test_train_records_eos_after_sentence_final_tag": "passed",
+    "unit/test_tnt.py::test_empty_sentences_do_not_record_eos_at_bos": "passed",
+    "unit/test_tnt.py::test_tagging_oov_words_does_not_mutate_trained_counts": "passed",
+    "unit/test_tnt.py::test_untrained_tagger_tags_unknown_word_as_unk": "passed",
+    "unit/test_tnt.py::test_external_unk_unseen_tag_uses_transition_floor": "passed",
+    "unit/test_tnt.py::test_external_unk_is_not_cached": "passed",
+    "unit/test_tnt.py::test_external_unk_wrong_length_output_raises_clear_error": "passed",
+    "unit/test_tnt.py::test_transition_logp_cache_matches_deleted_interpolation_formula": "passed",
+    "unit/test_tnt.py::test_known_words_decode_to_their_only_seen_tag": "passed",
+    "unit/test_tnt.py::test_threshold_pruning_keeps_viable_ambiguous_beam": "passed",
+    "unit/test_tnt.py::test_decode_tie_breaking_is_repeat_stable": "passed",
+    "unit/test_tnt.py::test_suffix_model_decodes_oov_heavy_sentence_repeatably": "passed",
+    "unit/test_tnt.py::test_iterative_decode_handles_long_ambiguous_sentence": "passed",
+    "unit/test_tnt.py::test_candidate_cache_does_not_grow_on_repeated_sentence": "passed",
+    "unit/test_tnt.py::test_segmented_tagging_preserves_output_shape": "passed",
+    "unit/test_tnt.py::test_segment_true_matches_segment_false_on_single_sentence": "passed",
+    "unit/test_tnt.py::test_tagdata_forwards_segment_kwarg_to_tag": "passed",
+    "unit/test_tnt.py::test_tag_and_tagdata_reject_string_or_bytes_input": "passed",
+    "unit/test_tnt.py::test_pickle_round_trip_preserves_model_state_and_tags": "passed",
+    "unit/test_tnt.py::test_training_data_reordering_preserves_model_state": "passed",
+    "unit/test_tnt.py::test_training_data_reordering_preserves_decoded_output": "passed"
+  },
+  "PASS_TO_PASS": {
+    "unit/test_tag.py::test_basic": "passed",
+    "unit/test_pos_tag.py": "passed"
+  }
+}

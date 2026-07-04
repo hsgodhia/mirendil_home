@@ -1,0 +1,27 @@
+diff --git a/nltk/test/unit/test_stem.py b/nltk/test/unit/test_stem.py
+index 8e78576c..13ca2faf 100644
+--- a/nltk/test/unit/test_stem.py
++++ b/nltk/test/unit/test_stem.py
+@@ -3,6 +3,7 @@ from __future__ import print_function, unicode_literals
+ import unittest
+ from nltk.stem.snowball import SnowballStemmer
+ 
++
+ class SnowballTest(unittest.TestCase):
+ 
+     def test_russian(self):
+@@ -22,6 +23,14 @@ class SnowballTest(unittest.TestCase):
+         assert stemmer_german.stem("keinen") == 'kein'
+         assert stemmer_german2.stem("keinen") == 'keinen'
+ 
++    def test_spanish(self):
++        stemmer = SnowballStemmer('spanish')
++
++        assert stemmer.stem("Visionado") == 'vision'
++
++        # The word 'algue' was raising an IndexError
++        assert stemmer.stem("algue") == 'algu'
++
+     def test_short_strings_bug(self):
+         stemmer = SnowballStemmer('english')
+         assert stemmer.stem("y's") == 'y'

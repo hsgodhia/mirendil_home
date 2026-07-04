@@ -1,0 +1,20 @@
+{
+  "repo": "nltk/nltk",
+  "pr_number": 760,
+  "pr_title": "Fix spanish stemmer raising indexerror",
+  "pr_url": "https://github.com/nltk/nltk/pull/760",
+  "intent": {
+    "category": "bug_fix",
+    "other_label": "",
+    "rationale": "The PR explicitly fixes an IndexError in the Spanish stemmer with changes to the stemmer logic and addition of test coverage for the bug.",
+    "confidence": 0.98
+  },
+  "base_commit": "0b91a7160717faa2fe93d42f7c6bba735f6dd48a",
+  "merge_commit": "e92870206ab5f6a3f606dd702bfe376f4878a1ef",
+  "diff_end_commit": "e800564e6584d37faee00b0eb109540bef713077",
+  "patch": "patch.diff",
+  "test_patch": "test_patch.diff",
+  "FAIL_TO_PASS": [],
+  "PASS_TO_PASS": [],
+  "_status": "generated"
+}

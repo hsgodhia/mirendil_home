@@ -1,0 +1,98 @@
+{
+  "bug_fix": {
+    "number": 3156,
+    "title": "Solve breaking issue with CharTokenizer",
+    "html_url": "https://github.com/nltk/nltk/pull/3156",
+    "confidence": 0.98,
+    "rationale": "The PR fixes a TypeError in CharTokenizer by adding a missing `_string = None` attribute to prevent abstract class instantiation issues, with accompanying test coverage.",
+    "candidates_in_group": 43
+  },
+  "refactor_cleanup": {
+    "number": 2697,
+    "title": "Move all pytest code to nltk/test/",
+    "html_url": "https://github.com/nltk/nltk/pull/2697",
+    "confidence": 0.97,
+    "rationale": "This PR consolidates pytest configuration and setup code from scattered production modules into a centralized test directory structure, removing duplicate setup_module functions and improving code organization without adding features or fixing bugs.",
+    "candidates_in_group": 10
+  },
+  "build_ci_deps": {
+    "number": 2108,
+    "title": "First try at travis",
+    "html_url": "https://github.com/nltk/nltk/pull/2108",
+    "confidence": 0.92,
+    "rationale": "PR adds .travis.yml configuration file and modifies build scripts (jenkins.sh), establishing continuous integration infrastructure for the project as indicated by CI label and title mentioning Travis.",
+    "candidates_in_group": 4
+  },
+  "data_corpus_update": {
+    "number": 1569,
+    "title": "framenet.doctest: Apparently corpus ID changed from FN 1.5 to 1.7",
+    "html_url": "https://github.com/nltk/nltk/pull/1569",
+    "confidence": 0.92,
+    "rationale": "PR updates framenet doctest expectations to reflect a corpus version change from FrameNet 1.5 to 1.7.",
+    "candidates_in_group": 3
+  },
+  "feature_addition": {
+    "number": 2077,
+    "title": "Language Modeling",
+    "html_url": "https://github.com/nltk/nltk/pull/2077",
+    "confidence": 0.98,
+    "rationale": "This PR adds a new language modeling module to NLTK with comprehensive API, data structures, models, preprocessing, and smoothing implementations, along with extensive tests and documentation.",
+    "candidates_in_group": 16
+  },
+  "deprecation_removal": {
+    "number": 2504,
+    "title": "Remove more Python 2 artifacts",
+    "html_url": "https://github.com/nltk/nltk/pull/2504",
+    "confidence": 0.88,
+    "rationale": "PR removes Python 2 compatibility code and functions from compat.py that are no longer needed since Python 2 is deprecated, including the removal of unicode_repr() and other legacy compatibility exports.",
+    "candidates_in_group": 3
+  },
+  "documentation": {
+    "number": 219,
+    "title": "Typofix",
+    "html_url": "https://github.com/nltk/nltk/pull/219",
+    "confidence": 0.95,
+    "rationale": "This PR fixes typos in comments and docstrings across 34 files, which constitutes a documentation improvement rather than functional code changes.",
+    "candidates_in_group": 4
+  },
+  "copyright_metadata_update": {
+    "number": 3101,
+    "title": "Updated Copyright year to 2023",
+    "html_url": "https://github.com/nltk/nltk/pull/3101",
+    "confidence": 0.9,
+    "rationale": "This PR only updates copyright year metadata across files without changing code logic, functionality, or structure.",
+    "candidates_in_group": 1
+  },
+  "security_fix": {
+    "number": 3641,
+    "title": "fix(security): stop quadratic ReDoS in CCG lexicon parsing (CWE-1333)",
+    "html_url": "https://github.com/nltk/nltk/pull/3641",
+    "confidence": 1.0,
+    "rationale": "This PR fixes a ReDoS (Regular Expression Denial of Service) vulnerability (CWE-1333) in CCG lexicon parsing by eliminating quadratic regex backtracking, with additional security-focused tests.",
+    "candidates_in_group": 6
+  },
+  "test_coverage": {
+    "number": 3451,
+    "title": "add tests for _make_bound_method",
+    "html_url": "https://github.com/nltk/nltk/pull/3451",
+    "confidence": 0.98,
+    "rationale": "PR explicitly adds a new test file with test coverage for _make_bound_method to ensure compatibility across Python versions before addressing py3.13 specific changes.",
+    "candidates_in_group": 6
+  },
+  "revert": {
+    "number": 213,
+    "title": "Backtracking some python 2.5 incompatible changes",
+    "html_url": "https://github.com/nltk/nltk/pull/213",
+    "confidence": 0.95,
+    "rationale": "This PR explicitly backtracks and withdraws previous changes that introduced Python 2.5 incompatibilities, reverting the use of @setter decorators and collections.MutableSequence.",
+    "candidates_in_group": 2
+  },
+  "style_lint_formatting": {
+    "number": 15,
+    "title": "Extra whitespaces are removed, all tabs are converted to spaces",
+    "html_url": "https://github.com/nltk/nltk/pull/15",
+    "confidence": 0.98,
+    "rationale": "PR removes extra whitespaces and converts all tabs to spaces across 162 files with nearly balanced additions/deletions, indicating pure formatting cleanup with no functional changes.",
+    "candidates_in_group": 2
+  }
+}

@@ -1,0 +1,4 @@
+results/*.traj.json
+results/_grading_pr-*/
+stdout.log
+stderr.log

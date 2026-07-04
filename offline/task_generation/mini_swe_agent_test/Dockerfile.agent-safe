@@ -1,0 +1,32 @@
+ARG PYTHON_VERSION=3.11
+FROM python:${PYTHON_VERSION}-slim AS nltk-agent-safe
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends git ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
+
+# Unlike nltk-eval-env's Dockerfile, this does a SHALLOW, SINGLE-COMMIT fetch,
+# not a full clone. A full clone carries every branch and every future commit
+# in the live repo -- including, for any already-merged PR, the PR's own
+# branch and the actual fix commits. An autonomous agent given full shell
+# access can trivially find that with `git log --all` and just apply the real
+# diff, without reasoning about the bug at all (confirmed empirically: this
+# is exactly what happened before this fix existed). A depth-1 fetch by exact
+# commit SHA leaves the repo with ONE commit and no other refs to explore.
+ARG NLTK_COMMIT=a51b230b785ba37f0995152c74875f19f10302d0
+ENV NLTK_COMMIT=${NLTK_COMMIT}
+
+RUN git init -q /repo \
+ && cd /repo \
+ && git remote add origin https://github.com/nltk/nltk.git \
+ && git fetch --depth 1 origin ${NLTK_COMMIT} \
+ && git checkout -q FETCH_HEAD \
+ && git checkout -q -b work \
+ && rm -rf .git/refs/remotes .git/packed-refs \
+ && git remote remove origin
+
+WORKDIR /repo
+RUN pip install --no-cache-dir -e ".[all]" pytest pytest-cov pytest-mock pytest-json-report
+
+ENV NLTK_DATA=/usr/share/nltk_data
+RUN python -m nltk.downloader -d /usr/share/nltk_data all

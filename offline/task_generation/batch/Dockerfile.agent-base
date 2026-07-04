@@ -1,0 +1,23 @@
+ARG PYTHON_VERSION=3.11
+FROM python:${PYTHON_VERSION}-slim AS nltk-agent-base
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends git ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
+
+# Deps only, no repo checkout yet -- this layer is shared across every
+# per-PR agent-safe image so nltk_data (~3.5GB unpacked) and the Python
+# dependency wheels are downloaded exactly once, not once per PR.
+RUN pip install --no-cache-dir \
+    defusedxml click joblib "regex>=2021.8.3" tqdm \
+    numpy python-crfsuite scikit-learn scipy \
+    matplotlib pyparsing twython requests \
+    pytest pytest-cov pytest-mock pytest-json-report
+
+# A plain PyPI nltk install, only so `python -m nltk.downloader` exists to
+# fetch nltk_data (corpora are version-independent of the nltk source commit
+# under test). The per-PR image's editable install of the real checkout
+# overrides this package entry afterwards.
+RUN pip install --no-cache-dir nltk
+ENV NLTK_DATA=/usr/share/nltk_data
+RUN python -m nltk.downloader -d /usr/share/nltk_data all

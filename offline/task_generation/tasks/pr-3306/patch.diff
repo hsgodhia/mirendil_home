@@ -1,0 +1,128 @@
+diff --git a/nltk/collections.py b/nltk/collections.py
+index 62ff8dbf..01e80002 100644
+--- a/nltk/collections.py
++++ b/nltk/collections.py
+@@ -6,7 +6,6 @@
+ # For license information, see LICENSE.TXT
+ 
+ import bisect
+-
+ from functools import total_ordering
+ from itertools import chain, islice
+ 
+diff --git a/nltk/corpus/reader/wordnet.py b/nltk/corpus/reader/wordnet.py
+index a4e3dd9b..e7f1ae11 100644
+--- a/nltk/corpus/reader/wordnet.py
++++ b/nltk/corpus/reader/wordnet.py
+@@ -589,12 +589,13 @@ class Synset(_WordNetObject):
+ 
+         >>> dog = wn.synset('dog.n.01')
+         >>> hyp = lambda s:sorted(s.hypernyms())
+-        >>> print(sorted(dog.closure(hyp)))
+-        [Synset('animal.n.01'), Synset('canine.n.02'), Synset('carnivore.n.01'),\
+-Synset('chordate.n.01'), Synset('domestic_animal.n.01'), Synset('entity.n.01'),\
+-Synset('living_thing.n.01'), Synset('mammal.n.01'), Synset('object.n.01'),\
+-Synset('organism.n.01'), Synset('physical_entity.n.01'), Synset('placental.n.01'),\
+-Synset('vertebrate.n.01'), Synset('whole.n.02')]
++        >>> print(list(dog.closure(hyp)))
++        [Synset('canine.n.02'), Synset('domestic_animal.n.01'), Synset('carnivore.n.01'),\
++ Synset('animal.n.01'), Synset('placental.n.01'), Synset('organism.n.01'),\
++ Synset('mammal.n.01'), Synset('living_thing.n.01'), Synset('vertebrate.n.01'),\
++ Synset('whole.n.02'), Synset('chordate.n.01'), Synset('object.n.01'),\
++ Synset('physical_entity.n.01'), Synset('entity.n.01')]
++
+         UserWarning: Discarded redundant search for Synset('animal.n.01') at depth 7
+         """
+ 
+diff --git a/nltk/data.py b/nltk/data.py
+index bc8e2272..02c76c41 100644
+--- a/nltk/data.py
++++ b/nltk/data.py
+@@ -52,7 +52,6 @@ except ImportError:
+     from zlib import Z_FINISH as FLUSH
+ 
+ from nltk import grammar, sem
+-from nltk.compat import add_py3_data, py3_data
+ from nltk.internals import deprecated
+ 
+ textwrap_indent = functools.partial(textwrap.indent, prefix="  ")
+@@ -300,7 +299,6 @@ class FileSystemPathPointer(PathPointer, str):
+     directly via a given absolute path.
+     """
+ 
+-    @py3_data
+     def __init__(self, _path):
+         """
+         Create a new path pointer for the given absolute path.
+@@ -349,7 +347,6 @@ class BufferedGzipFile(GzipFile):
+     Python versions.
+     """
+ 
+-    @py3_data
+     def __init__(
+         self, filename=None, mode=None, compresslevel=9, fileobj=None, **kwargs
+     ):
+@@ -382,7 +379,6 @@ class ZipFilePathPointer(PathPointer):
+     which can be accessed by reading that zipfile.
+     """
+ 
+-    @py3_data
+     def __init__(self, zipfile, entry=""):
+         """
+         Create a new path pointer pointing at the specified entry
+@@ -791,7 +787,6 @@ def load(
+     :param encoding: the encoding of the input; only used for text formats.
+     """
+     resource_url = normalize_resource_url(resource_url)
+-    resource_url = add_py3_data(resource_url)
+ 
+     # Determine the format of the resource.
+     if format == "auto":
+@@ -818,7 +813,6 @@ def load(
+                 print(f"<<Using cached copy of {resource_url}>>")
+             return resource_val
+ 
+-    resource_url = normalize_resource_url(resource_url)
+     protocol, path_ = split_resource_url(resource_url)
+ 
+     if path_[-7:] == ".pickle":
+@@ -979,7 +973,7 @@ def _open(resource_url):
+ 
+ 
+ class LazyLoader:
+-    @py3_data
++
+     def __init__(self, _path):
+         self._path = _path
+ 
+@@ -1020,7 +1014,6 @@ class OpenOnDemandZipFile(zipfile.ZipFile):
+     read-only (i.e. ``write()`` and ``writestr()`` are disabled.
+     """
+ 
+-    @py3_data
+     def __init__(self, filename):
+         if not isinstance(filename, str):
+             raise TypeError("ReopenableZipFile filename must be a string")
+@@ -1077,7 +1070,6 @@ class SeekableUnicodeStreamReader:
+ 
+     DEBUG = True  # : If true, then perform extra sanity checks.
+ 
+-    @py3_data
+     def __init__(self, stream, encoding, errors="strict"):
+         # Rewind the stream to its beginning.
+         stream.seek(0)
+diff --git a/nltk/util.py b/nltk/util.py
+index 06a61dd7..4ffe95b4 100644
+--- a/nltk/util.py
++++ b/nltk/util.py
+@@ -408,7 +408,9 @@ def acyclic_breadth_first(tree, children=iter, maxdepth=-1, verbose=False):
+                 pass
+ 
+ 
+-def acyclic_depth_first(tree, children=iter, depth=-1, cut_mark=None, traversed=None, verbose=False):
++def acyclic_depth_first(
++    tree, children=iter, depth=-1, cut_mark=None, traversed=None, verbose=False
++):
+     """Traverse the nodes of a tree in depth-first order,
+     discarding eventual cycles within any branch,
+     adding cut_mark (when specified) if cycles were truncated.

@@ -1,0 +1,34 @@
+{
+  "repo": "nltk/nltk",
+  "pr_number": 3306,
+  "pr_title": "Don't add PY3 in data path",
+  "pr_url": "https://github.com/nltk/nltk/pull/3306",
+  "intent": {
+    "category": "refactor_cleanup",
+    "other_label": "",
+    "rationale": "This PR removes obsolete code that handled PY3 folder paths in the data module, cleaning up legacy pickle package support that was already dropped elsewhere in the codebase.",
+    "confidence": 0.8
+  },
+  "base_commit": "96ee715997e1c8d9148b6d8e1b32f412f31c7ff7",
+  "merge_commit": "bf05dc4cf25b568aaa68b224cefdd54916be8efc",
+  "diff_end_commit": "bf05dc4cf25b568aaa68b224cefdd54916be8efc",
+  "patch": "patch.diff",
+  "test_patch": "test_patch.diff",
+  "FAIL_TO_PASS": [],
+  "PASS_TO_PASS": [
+    "unit/test_wordnet.py::WordnNetDemo::test_antonyms",
+    "unit/test_wordnet.py::WordnNetDemo::test_derivationally_related_forms",
+    "unit/test_wordnet.py::WordnNetDemo::test_domains",
+    "unit/test_wordnet.py::WordnNetDemo::test_hyperhyponyms",
+    "unit/test_wordnet.py::WordnNetDemo::test_in_topic_domains",
+    "unit/test_wordnet.py::WordnNetDemo::test_iterable_type_for_all_lemma_names",
+    "unit/test_wordnet.py::WordnNetDemo::test_lch",
+    "unit/test_wordnet.py::WordnNetDemo::test_meronyms_holonyms",
+    "unit/test_wordnet.py::WordnNetDemo::test_misc_relations",
+    "unit/test_wordnet.py::WordnNetDemo::test_omw_lemma_no_trailing_underscore",
+    "unit/test_wordnet.py::WordnNetDemo::test_retrieve_synset",
+    "unit/test_wordnet.py::WordnNetDemo::test_retrieve_synsets",
+    "unit/test_wordnet.py::WordnNetDemo::test_wordnet_similarities"
+  ],
+  "_status": "no_discriminating_tests"
+}

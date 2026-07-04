@@ -1,0 +1,38 @@
+{
+  "pr_number": 3672,
+  "model_key": "kimi-k2.7-code",
+  "model_name": "openrouter/moonshotai/kimi-k2.7-code",
+  "exit_status": "Submitted",
+  "elapsed_seconds": 93.0,
+  "submission_chars": 1646,
+  "resolved": false,
+  "fail_to_pass_total": 4,
+  "fail_to_pass_passed": 2,
+  "pass_to_pass_total": 14,
+  "pass_to_pass_passed": 14,
+  "detail": {
+    "resolved": false,
+    "FAIL_TO_PASS": {
+      "unit/test_segmentation.py::test_negative_window_width_rejected": "failed",
+      "unit/test_segmentation.py::test_pk_is_linear_not_quadratic": "passed",
+      "unit/test_segmentation.py::test_pk_rejects_unequal_length": "failed",
+      "unit/test_segmentation.py::test_windowdiff_is_linear_not_quadratic": "passed"
+    },
+    "PASS_TO_PASS": {
+      "unit/test_segmentation.py::test_basic_functionality": "passed",
+      "unit/test_segmentation.py::test_boundary_marker_as_non_string": "passed",
+      "unit/test_segmentation.py::test_boundary_marker_variations": "passed",
+      "unit/test_segmentation.py::test_complex_patterns": "passed",
+      "unit/test_segmentation.py::test_edge_cases": "passed",
+      "unit/test_segmentation.py::test_error_handling": "passed",
+      "unit/test_segmentation.py::test_large_scale_cases": "passed",
+      "unit/test_segmentation.py::test_mixed_content_segmentations": "passed",
+      "unit/test_segmentation.py::test_non_string_segmentations": "passed",
+      "unit/test_segmentation.py::test_pevzner_hearst_examples": "passed",
+      "unit/test_segmentation.py::test_pk_basic_and_default_window": "passed",
+      "unit/test_segmentation.py::test_pk_reference_values": "passed",
+      "unit/test_segmentation.py::test_symmetry": "passed",
+      "unit/test_segmentation.py::test_weighted_vs_unweighted": "passed"
+    }
+  }
+}

@@ -1,0 +1,106 @@
+diff --git a/nltk/tag/tnt.py b/nltk/tag/tnt.py
+index 1d608d7..0fae7f2 100755
+--- a/nltk/tag/tnt.py
++++ b/nltk/tag/tnt.py
+@@ -166,7 +166,9 @@ class TnT(TaggerI):
+                 # set local flag C to false for the next word
+                 C = False
+ 
+-            self._eos[t]["EOS"] += 1
++            # Only update EOS counts for non-empty sentences
++            if sent:
++                self._eos[t]["EOS"] += 1
+ 
+         # compute lambda values from the trained frequency distributions
+         self._compute_lambda()
+@@ -235,11 +237,15 @@ class TnT(TaggerI):
+                     tl3 += self._tri[history][tag] / 2.0
+ 
+                 # if c1, and c2 are equal and larger than c3
+-                # this might be a dumb thing to do....(not sure yet)
+                 elif (c2 == c1) and (c1 > c3):
+                     tl1 += self._tri[history][tag] / 2.0
+                     tl2 += self._tri[history][tag] / 2.0
+ 
++                # if c1, and c3 are equal and larger than c2
++                elif (c1 == c3) and (c1 > c2):
++                    tl1 += self._tri[history][tag] / 2.0
++                    tl3 += self._tri[history][tag] / 2.0
++
+                 # otherwise there might be a problem
+                 # eg: all values = 0
+                 else:
+@@ -247,9 +253,16 @@ class TnT(TaggerI):
+ 
+         # Lambda normalisation:
+         # ensures that l1+l2+l3 = 1
+-        self._l1 = tl1 / (tl1 + tl2 + tl3)
+-        self._l2 = tl2 / (tl1 + tl2 + tl3)
+-        self._l3 = tl3 / (tl1 + tl2 + tl3)
++        total = tl1 + tl2 + tl3
++        if total > 0:
++            self._l1 = tl1 / total
++            self._l2 = tl2 / total
++            self._l3 = tl3 / total
++        else:
++            # Default lambda values if no valid data
++            self._l1 = 1.0 / 3.0
++            self._l2 = 1.0 / 3.0
++            self._l3 = 1.0 / 3.0
+ 
+     def _safe_div(self, v1, v2):
+         """
+@@ -297,7 +310,7 @@ class TnT(TaggerI):
+         returns a list of (word, tag) tuples
+         """
+ 
+-        current_state = [(["BOS", "BOS"], 0.0)]
++        current_state = [([("BOS", False), ("BOS", False)], 0.0)]
+ 
+         sent = list(data)
+ 
+@@ -331,6 +344,16 @@ class TnT(TaggerI):
+         # return the most probable tag
+         if sent == []:
+             (h, logp) = current_states[0]
++            # Apply EOS scoring: add log(P(EOS|t_T)) to the log probability
++            # The last tag is h[-1]
++            last_tag = h[-1]
++            if last_tag[0] in self._eos.conditions():
++                eos_count = self._eos[last_tag[0]].freq("EOS")
++                tag_count = self._uni.freq(last_tag)
++                if tag_count > 0 and eos_count > 0:
++                    logp = logp + log(eos_count / tag_count, 2)
++            # Update the log probability in current_states for proper sorting
++            current_states[0] = (h, logp)
+             return h
+ 
+         # otherwise there are more words to be tagged
+@@ -360,6 +383,11 @@ class TnT(TaggerI):
+                     p_tri = self._tri[tuple(history[-2:])].freq(tC)
+                     p_wd = self._wd[word][t] / self._uni[tC]
+                     p = self._l1 * p_uni + self._l2 * p_bi + self._l3 * p_tri
++                    # Avoid log(0) by using a small epsilon
++                    if p <= 0:
++                        p = 1e-10
++                    if p_wd <= 0:
++                        p_wd = 1e-10
+                     p2 = log(p, 2) + log(p_wd, 2)
+ 
+                     # compute the result of appending each tag to this history
+@@ -396,10 +424,11 @@ class TnT(TaggerI):
+         # set is now ordered greatest to least log probability
+         new_states.sort(reverse=True, key=itemgetter(1))
+ 
+-        # del everything after N (threshold)
+-        # this is the beam search cut
+-        if len(new_states) > self._N:
+-            new_states = new_states[: self._N]
++        # beam search cut - threshold pruning relative to best state
++        # Keep all states whose log probability is within N of the best
++        if len(new_states) > 1:
++            best_logp = new_states[0][1]
++            new_states = [s for s in new_states if s[1] >= best_logp - self._N]
+ 
+         # compute the tags for the rest of the sentence
+         # return the best list of tags for the sentence

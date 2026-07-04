@@ -1,0 +1,20 @@
+{
+  "pr_number": 3487,
+  "model_key": "gpt-oss-120b",
+  "model_name": "openrouter/openai/gpt-oss-120b",
+  "exit_status": "Submitted",
+  "elapsed_seconds": 161.5,
+  "submission_chars": 1414,
+  "resolved": false,
+  "fail_to_pass_total": 1,
+  "fail_to_pass_passed": 0,
+  "pass_to_pass_total": 0,
+  "pass_to_pass_passed": 0,
+  "detail": {
+    "resolved": false,
+    "FAIL_TO_PASS": {
+      "unit/test_pickle_load_warnings.py::test_pickle_load_emits_warning": "MISSING"
+    },
+    "PASS_TO_PASS": {}
+  }
+}

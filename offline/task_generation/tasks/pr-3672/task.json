@@ -1,0 +1,40 @@
+{
+  "repo": "nltk/nltk",
+  "pr_number": 3672,
+  "pr_title": "fix(security): Denial of service via quadratic complexity in NLTK segmentation metrics",
+  "pr_url": "https://github.com/nltk/nltk/pull/3672",
+  "intent": {
+    "category": "security_fix",
+    "other_label": "",
+    "rationale": "This PR addresses a denial-of-service vulnerability (CWE-407) by fixing quadratic algorithmic complexity in segmentation metrics, reducing time complexity from O(n\u00b2) to O(n) through incremental window counting.",
+    "confidence": 0.99
+  },
+  "base_commit": "21e5219e3d37dcd8dfaf4edfccd85eb29ba68f31",
+  "merge_commit": "1106a38d89fa2dd5d435b6b5bab4a73e3f9ce72b",
+  "diff_end_commit": "1106a38d89fa2dd5d435b6b5bab4a73e3f9ce72b",
+  "patch": "patch.diff",
+  "test_patch": "test_patch.diff",
+  "FAIL_TO_PASS": [
+    "unit/test_segmentation.py::test_negative_window_width_rejected",
+    "unit/test_segmentation.py::test_pk_is_linear_not_quadratic",
+    "unit/test_segmentation.py::test_pk_rejects_unequal_length",
+    "unit/test_segmentation.py::test_windowdiff_is_linear_not_quadratic"
+  ],
+  "PASS_TO_PASS": [
+    "unit/test_segmentation.py::test_basic_functionality",
+    "unit/test_segmentation.py::test_boundary_marker_as_non_string",
+    "unit/test_segmentation.py::test_boundary_marker_variations",
+    "unit/test_segmentation.py::test_complex_patterns",
+    "unit/test_segmentation.py::test_edge_cases",
+    "unit/test_segmentation.py::test_error_handling",
+    "unit/test_segmentation.py::test_large_scale_cases",
+    "unit/test_segmentation.py::test_mixed_content_segmentations",
+    "unit/test_segmentation.py::test_non_string_segmentations",
+    "unit/test_segmentation.py::test_pevzner_hearst_examples",
+    "unit/test_segmentation.py::test_pk_basic_and_default_window",
+    "unit/test_segmentation.py::test_pk_reference_values",
+    "unit/test_segmentation.py::test_symmetry",
+    "unit/test_segmentation.py::test_weighted_vs_unweighted"
+  ],
+  "_status": "verified"
+}

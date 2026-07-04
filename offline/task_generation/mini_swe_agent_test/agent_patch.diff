@@ -1,0 +1,113 @@
+diff --git a/nltk/tag/tnt.py b/nltk/tag/tnt.py
+index 1d608d73c..bd5ae064c 100755
+--- a/nltk/tag/tnt.py
++++ b/nltk/tag/tnt.py
+@@ -166,7 +166,10 @@ class TnT(TaggerI):
+                 # set local flag C to false for the next word
+                 C = False
+ 
+-            self._eos[t]["EOS"] += 1
++            # EOS: count end of sentence tag
++            # Only update EOS counts for non-empty sentences
++            if sent:
++                self._eos[t]["EOS"] += 1
+ 
+         # compute lambda values from the trained frequency distributions
+         self._compute_lambda()
+@@ -240,6 +243,11 @@ class TnT(TaggerI):
+                     tl1 += self._tri[history][tag] / 2.0
+                     tl2 += self._tri[history][tag] / 2.0
+ 
++                # if c1, and c3 are equal and larger than c2
++                elif (c1 == c3) and (c1 > c2):
++                    tl1 += self._tri[history][tag] / 2.0
++                    tl3 += self._tri[history][tag] / 2.0
++
+                 # otherwise there might be a problem
+                 # eg: all values = 0
+                 else:
+@@ -247,9 +255,16 @@ class TnT(TaggerI):
+ 
+         # Lambda normalisation:
+         # ensures that l1+l2+l3 = 1
+-        self._l1 = tl1 / (tl1 + tl2 + tl3)
+-        self._l2 = tl2 / (tl1 + tl2 + tl3)
+-        self._l3 = tl3 / (tl1 + tl2 + tl3)
++        # handle case when all lambdas are zero (e.g., empty training data)
++        if (tl1 + tl2 + tl3) > 0:
++            self._l1 = tl1 / (tl1 + tl2 + tl3)
++            self._l2 = tl2 / (tl1 + tl2 + tl3)
++            self._l3 = tl3 / (tl1 + tl2 + tl3)
++        else:
++            # default lambda values for empty training
++            self._l1 = 1.0 / 3.0
++            self._l2 = 1.0 / 3.0
++            self._l3 = 1.0 / 3.0
+ 
+     def _safe_div(self, v1, v2):
+         """
+@@ -297,7 +312,7 @@ class TnT(TaggerI):
+         returns a list of (word, tag) tuples
+         """
+ 
+-        current_state = [(["BOS", "BOS"], 0.0)]
++        current_state = [([("BOS", False), ("BOS", False)], 0.0)]
+ 
+         sent = list(data)
+ 
+@@ -330,8 +345,41 @@ class TnT(TaggerI):
+         # if this word marks the end of the sentence,
+         # return the most probable tag
+         if sent == []:
+-            (h, logp) = current_states[0]
+-            return h
++            # apply EOS scoring: add log(P(EOS | t_T))
++            # P(EOS | t_T) = freq(t_T, EOS) / sum over all tags of freq(t_T, tag)
++            best_state = None
++            best_score = float('-inf')
++            for (h, logp) in current_states:
++                # get the last tag from history (excluding BOS)
++                if len(h) > 2:
++                    last_tag = h[-1]
++                    # check if we have EOS data for this tag
++                    if last_tag in self._eos and self._eos[last_tag].N() > 0:
++                        eos_count = self._eos[last_tag]["EOS"]
++                        total_count = sum(self._eos[last_tag].values())
++                        if total_count > 0:
++                            eos_prob = eos_count / total_count
++                            score = logp + log(eos_prob, 2)
++                            if score > best_score:
++                                best_score = score
++                                best_state = (h, score)
++                        else:
++                            if logp > best_score:
++                                best_score = logp
++                                best_state = (h, logp)
++                    else:
++                        if logp > best_score:
++                            best_score = logp
++                            best_state = (h, logp)
++                else:
++                    if logp > best_score:
++                        best_score = logp
++                        best_state = (h, logp)
++            
++            if best_state is None and current_states:
++                best_state = current_states[0]
++            
++            return best_state[0]
+ 
+         # otherwise there are more words to be tagged
+         word = sent[0]
+@@ -398,8 +446,10 @@ class TnT(TaggerI):
+ 
+         # del everything after N (threshold)
+         # this is the beam search cut
++        # use threshold pruning relative to best state (beam pruning)
+         if len(new_states) > self._N:
+-            new_states = new_states[: self._N]
++            threshold = new_states[self._N - 1][1]
++            new_states = [s for s in new_states if s[1] >= threshold]
+ 
+         # compute the tags for the rest of the sentence
+         # return the best list of tags for the sentence

@@ -1,0 +1,20 @@
+environment:
+  cwd: "/repo"
+  environment_class: docker
+  run_args: ["--rm", "--entrypoint", "", "--network", "none"]  # --entrypoint "" neutralizes
+    # the eval image's ENTRYPOINT (which otherwise intercepts the `sleep 2h` keep-alive
+    # command and crashes); --network none prevents the agent from fetching the real PR/patch
+    # off the internet instead of solving the task -- model API calls happen from the host
+    # process (litellm), not from inside this container, so this doesn't affect the agent's
+    # ability to think, only its ability to reach the live internet from its shell.
+  env:
+    PAGER: cat
+    MANPAGER: cat
+    LESS: -R
+    PIP_PROGRESS_BAR: "off"
+    TQDM_DISABLE: "1"
+    BASH_ENV: /dev/null
+
+model:
+  model_name: "openrouter/poolside/laguna-xs-2.1"
+
